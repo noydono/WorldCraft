@@ -8,23 +8,14 @@ const sujetSchema = new Schema({
   author: String,
   date: String,
   tag: Array,
-  categorieID:String,
+  categorieSmall_id:String,
   like: [
     {
       userId: String,
     },
   ],
-  reponse: [
-    {
-      userId: String,
-      content: String,
-      like: [
-        {
-          userId: String,
-        },
-      ],
-    },
-  ],
+  created_At:Date,
+  updated_At:Date
 });
 const SUJET = mongoose.model("Sujet", sujetSchema);
 

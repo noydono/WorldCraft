@@ -1,16 +1,19 @@
-const Categorie = require("../dbModels/categorie.js");
+const BCategorie = require ("../dbModels/categorieBig");
 
 module.exports = {
-  create: (req, res) => {
-    
-    
-    Categorie.create({
-      name: req.body.name,
-      description: req.body.description,
-      categorie: req.body.categorie, //array contenent au que mod il apartai java worldedit ...
-      tag: req.body.tag,
-    });
-
-    res.send("coucou");
+  setBigCategorie: (req, res) => {
+    console.log("coucou")
+    var data = {
+      name: req.body.name
+    }
+    BCategorie.create(data,(err) => {
+      (err) ? console.log('erreur Set BigCategorie : **********' + err) : console.log('bigCategorie create')  
+    })
   },
+  getBigCategorie: async(req,res) => {
+    console.log('getBigCategorie')
+    var data = await BCategorie.find({})
+    console.log(data)
+    res.send(data)
+  }
 };

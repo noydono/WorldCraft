@@ -11,20 +11,27 @@ export default new Vuex.Store({
   
   state: {
     data: {},
-    categorie: [],
-    categories:['java:WorldEdit', 'java:Voxel', 'java:build', 'bedrock:build','forum']
+    smallVategorie: [],
+    bigCategorie:[]
   },
 
   mutations: {
     SET_DATA(state, value) {
       state.data = value;
     },
+    SET_BCATEGORIE(state, bigCategorie) {
+      state.bigCategorie = bigCategorie;
+    },
   },
 
   actions: {
-    async createCategorie(context) {
-      await axios.post("http://localhost:4000/createCategorie", context.state.data);
+    async setBigCategorie(context) {
+      await axios.post("http://localhost:4000/setBigCategorie", context.state.data);
       router.push("/");
+    },
+    async getBigCategorie(context) {
+      const { data: bigCategorie } = await axios.get("http://localhost:4000/getBigCategorie");
+      context.commit("SET_BCATEGORIE", bigCategorie);
     },
   },
 

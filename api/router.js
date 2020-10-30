@@ -3,7 +3,10 @@ const express = require('express'),
 
 const categorieController = require("./controllers/Categorie.js")
 
-router.route('/createCategorie')
-    .post(categorieController.create)
+router.route('/setBigCategorie')
+    .post(categorieController.setBigCategorie)
+
+router.route('/getBigCategorie')
+    .get(categorieController.getBigCategorie)
 
 module.exports = router

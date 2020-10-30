@@ -3,21 +3,21 @@
     <v-row>
       <v-col>
         <h1>admin</h1>
-        <createCategorie/>
+        <createBigCategorie/>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import createCategorie from '../components/admin/createCategorie'
+import createBigCategorie from '../components/admin/createBigCategorie'
 export default {
   name: "Forum",
   data() {
     return {};
   },
   components: {
-    createCategorie,
+    createBigCategorie,
   },
 };
 </script>
