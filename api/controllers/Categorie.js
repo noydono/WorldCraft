@@ -1,8 +1,8 @@
 const BCategorie = require ("../dbModels/categorieBig");
+const SCategorie = require ("../dbModels/categorieSmall");
 
 module.exports = {
   setBigCategorie: (req, res) => {
-    console.log("coucou")
     var data = {
       name: req.body.name
     }
@@ -11,9 +11,20 @@ module.exports = {
     })
   },
   getBigCategorie: async(req,res) => {
-    console.log('getBigCategorie')
     var data = await BCategorie.find({})
-    console.log(data)
     res.send(data)
-  }
+  },
+  setSmallCategorie: (req, res) => {
+    var data = {
+      ...req.body
+    }
+
+    SCategorie.create(data,(err) => {
+      (err) ? console.log('erreur Set SmallCategorie : **********' + err) : console.log('smallCategorie create')  
+    })
+  },
+  getSmallCategorie: async(req,res) => {
+    var data = await SCategorie.find({})
+    res.send(data)
+  },
 };

@@ -9,4 +9,10 @@ router.route('/setBigCategorie')
 router.route('/getBigCategorie')
     .get(categorieController.getBigCategorie)
 
+router.route('/setSmallCategorie')
+    .post(categorieController.setSmallCategorie)
+
+router.route('/getSmallCategorie')
+    .get(categorieController.getSmallCategorie)
+
 module.exports = router

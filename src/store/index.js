@@ -11,7 +11,7 @@ export default new Vuex.Store({
   
   state: {
     data: {},
-    smallVategorie: [],
+    smallCategorie: [],
     bigCategorie:[]
   },
 
@@ -21,6 +21,9 @@ export default new Vuex.Store({
     },
     SET_BCATEGORIE(state, bigCategorie) {
       state.bigCategorie = bigCategorie;
+    },
+    SET_SCATEGORIE(state, smallCategorie) {
+      state.smallCategorie = smallCategorie;
     },
   },
 
@@ -32,6 +35,14 @@ export default new Vuex.Store({
     async getBigCategorie(context) {
       const { data: bigCategorie } = await axios.get("http://localhost:4000/getBigCategorie");
       context.commit("SET_BCATEGORIE", bigCategorie);
+    },
+    async setSmallCategorie(context) {
+      await axios.post("http://localhost:4000/setSmallCategorie", context.state.data);
+      router.push("/");
+    },
+    async getSmallCategorie(context) {
+      const { data: smallCategorie } = await axios.get("http://localhost:4000/getSmallCategorie");
+      context.commit("SET_SCATEGORIE", smallCategorie);
     },
   },
 

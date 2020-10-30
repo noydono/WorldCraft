@@ -4,6 +4,7 @@
       <v-col>
         <h1>admin</h1>
         <createBigCategorie/>
+        <createSmallCategorie/>
       </v-col>
     </v-row>
   </v-container>
@@ -11,6 +12,7 @@
 
 <script>
 import createBigCategorie from '../components/admin/createBigCategorie'
+import createSmallCategorie from '../components/admin/createSmallCategorie'
 export default {
   name: "Forum",
   data() {
@@ -18,6 +20,7 @@ export default {
   },
   components: {
     createBigCategorie,
+    createSmallCategorie,
   },
 };
 </script>
