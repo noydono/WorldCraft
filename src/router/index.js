@@ -34,7 +34,7 @@ let router = new VueRouter({
         component: () => import('../views/Forum.vue')
       }]
     },{
-      path:'/listSujet',
+      path:'/listSujet/:id',
       component:() => import('../layouts/main.vue'),
       children:[{
         path:'',
@@ -42,7 +42,7 @@ let router = new VueRouter({
         component: () => import('../views/listSujet.vue')
       }]
     },{
-      path:'/Article/12313661',
+      path:'/Article/:id',
       component:() => import('../layouts/main.vue'),
       children:[{
         path:'',

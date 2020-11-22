@@ -15,4 +15,10 @@ router.route('/setSmallCategorie')
 router.route('/getSmallCategorie')
     .get(categorieController.getSmallCategorie)
 
+router.route('/setSujet')
+    .post(categorieController.setSujet)
+
+router.route('/getSmallCategorie/:id')
+    .get(categorieController.getSujet)
+
 module.exports = router

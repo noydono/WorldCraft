@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
@@ -8,15 +8,17 @@ const sujetSchema = new Schema({
   author: String,
   date: String,
   tag: Array,
-  categorieSmall_id:String,
+  categorieSmall_id:{
+    type: String,
+    default: "5f9c5fdf7f2da87258fa88e5"
+  },
   like: [
     {
       userId: String,
     },
   ],
-  created_At:Date,
-  updated_At:Date
-});
+  updated_At:String
+},{ timestamps: { createdAt: 'created_at' }});
 const SUJET = mongoose.model("Sujet", sujetSchema);
 
 module.exports = SUJET;

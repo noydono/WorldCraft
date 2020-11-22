@@ -17,6 +17,7 @@
             categorieBig._id
           )"
           :key="key"
+          :to="{ path: '/listSujet/' + categorieSmall._id }"
         >
           <v-list-item-icon class="mt-6 grey--text text--darken-2">
             <v-icon
@@ -24,7 +25,6 @@
               style="font-size: 30px"
             ></v-icon>
           </v-list-item-icon>
-
           <v-list-item-content>
             <div class="d-flex flex-row justify-start align-start">
               <div
@@ -69,18 +69,16 @@ export default {
   methods: {
     ...mapActions(["getBigCategorie", "getSmallCategorie"]),
 
-    filterSmallCategorie(bId){
+    filterSmallCategorie(bId) {
       var arrayCat = [];
       this.smallCategorie.forEach((item) => {
-
-        if(bId === item.categorieBig_id){
-          arrayCat.push(item)
-        } 
-
-      })
+        if (bId === item.categorieBig_id) {
+          arrayCat.push(item);
+        }
+      });
 
       return arrayCat;
-    }
+    },
   },
   computed: {
     ...mapState(["bigCategorie", "smallCategorie"]),
