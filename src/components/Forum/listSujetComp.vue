@@ -2,19 +2,20 @@
   <v-row class="mt-12">
     <v-card class="mx-auto" v-if="sujet.length != 0">
       <v-list
-        :disabled="disabled"
-        :dense="dense"
-        :two-line="twoLine"
-        :three-line="threeLine"
-        :shaped="shaped"
-        :flat="flat"
-        :subheader="subheader"
-        :sub-group="subGroup"
-        :nav="nav"
-        :avatar="avatar"
-        :rounded="rounded"
+        :disabled="false"
+        :dense="false"
+        :two-line="false"
+        :three-line="true"
+        :shaped="true"
+        :flat="false"
+        :subheader="false"
+        :sub-group="false"
+        :nav="false"
+        :avatar="true"
+        :rounded="false"
         max-width="900"
         width="800"
+        
       >
         <v-subheader>Sujet</v-subheader>
         <v-list-item-group v-model="item" color="primary">
@@ -57,7 +58,7 @@
             </div>
           </v-list-item>
           <v-pagination
-            v-if="pagination.total >= pagination.rowsPerPage"
+            v-if="sujet.length >= pagination.rowsPerPage"
             v-model="pagination.page"
             :length="pages"
             circle
@@ -83,38 +84,24 @@ export default {
   data() {
     return {
       item: 5,
-      disabled: false,
-      dense: false,
-      twoLine: false,
-      threeLine: true,
-      shaped: true,
-      flat: false,
-      subheader: false,
-      inactive: false,
-      subGroup: false,
-      nav: false,
-      avatar: true,
-      rounded: false,
       pagination: {
         page: 1,
-        total: 0,
         rowsPerPage: 10,
       },
     };
   },
-  mounted() {
-    this.pagination.total = this.sujet.length;
-  },
   created() {
     this.getSujet(this.$route.params.id);
+    
   },
   methods: {
     ...mapActions(["getSujet"]),
   },
   computed: {
     ...mapState(["sujet"]),
+    
     pages() {
-      return Math.ceil(this.pagination.total / this.pagination.rowsPerPage);
+      return Math.ceil(this.sujet.length  / this.pagination.rowsPerPage);
     },
     cloneItems() {
       var clone = JSON.parse(JSON.stringify(this.sujet));
