@@ -18,6 +18,7 @@ export default new Vuex.Store({
 
   mutations: {
     SET_DATA(state, value) {
+      console.log("SET_DATA : "+ value.tag)
       state.data = value;
     },
     SET_BCATEGORIE(state, bigCategorie) {

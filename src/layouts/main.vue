@@ -7,29 +7,32 @@
       shrink-on-scroll
     >
       <template v-slot:img="{ props }">
-        <v-img v-bind="props" gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"></v-img>
+        <v-img
+          v-bind="props"
+          gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
+        ></v-img>
       </template>
       <v-toolbar-title>WorldCraft</v-toolbar-title>
       <v-btn link to="/" class="ml-auto mt-2" text>Accueil</v-btn>
       <v-btn link to="/forum" class="mt-2" text>Forum</v-btn>
       <v-btn link to="/login" class="mt-2" text>Se connecter</v-btn>
       <v-btn link to="/admin" class="mt-2" text>admin</v-btn>
+      <createSujet />
     </v-app-bar>
-
     <v-content class="grey lighten-5">
       <v-breadcrumbs :items="items">
         <template v-slot:divider>
           <v-icon>mdi-chevron-right</v-icon>
         </template>
       </v-breadcrumbs>
-      
+
       <router-view />
     </v-content>
 
     <v-footer color="grey darken-1" padless>
       <v-row justify="center" no-gutters>
         <v-btn
-          v-for="(link,key4) in links"
+          v-for="(link, key4) in links"
           :key="key4"
           color="white"
           text
@@ -37,7 +40,8 @@
           class="my-2"
           link
           :to="link.redirect"
-        >{{ link.name }}</v-btn>
+          >{{ link.name }}</v-btn
+        >
         <v-col class="grey py-4 text-center white--text" cols="12">
           {{ new Date().getFullYear() }} —
           <strong>WorldCraft</strong>
@@ -48,6 +52,8 @@
 </template>
 
 <script>
+import createSujet from "../components/global/createSujet";
+
 export default {
   props: {
     source: String,
@@ -86,5 +92,8 @@ export default {
     ],
   }),
   methods: {},
+  components: {
+    createSujet,
+  },
 };
 </script>
