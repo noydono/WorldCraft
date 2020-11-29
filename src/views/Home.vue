@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import cardHomeComp from "../components/Home/cardComp";
-import topSujetComp from "../components/Home/topSujetComp";
-import bannerComp from "../components/Home/bannerComp";
+import cardHomeComp from "../components/Home/card";
+import topSujetComp from "../components/Home/topSujet";
+import bannerComp from "../components/Home/banner";
 
 export default {
   name: "Home",

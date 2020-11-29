@@ -3,6 +3,8 @@
     <template v-slot:activator="{ on, attrs }">
       <v-btn class="mt-2" text v-bind="attrs" v-on="on"> Crée un sujet </v-btn>
     </template>
+
+    <!-- crud Sujet récuperation de l'id de la catégorie -->
     <v-card v-if="selectCat == false">
       <v-card-title>
         <h3>Choisir une categorie</h3>
@@ -62,20 +64,23 @@
         </v-list-group>
       </v-list>
     </v-card>
+
+    <!-- crud SUjet récuperation du titre, déscritpion, tag -->
     <v-card v-if="selectCat == true">
       <form @submit="submitSujet">
         <v-card-title>
           <h3>Creation de sujet</h3>
           <i @click="dialog = false" class="fas fa-times ml-auto"></i>
         </v-card-title>
+
         <v-card-text>
           <v-text-field
-            v-model="newSmallCategorie.name"
+            v-model="newSmallCategorie.title"
             label="Titre du sujet"
           ></v-text-field>
           <v-textarea
             outlined
-            v-model="newSmallCategorie.description"
+            v-model="newSmallCategorie.content"
             name="input-7-4"
             label="description de la sujet"
             value="newSmallCategorie.description"
@@ -85,6 +90,7 @@
             label="Tag du sujet"
           ></v-text-field>
         </v-card-text>
+
         <v-card-actions>
           <v-btn color="green darken-1" @click="retour()">Annuler</v-btn>
           <v-btn class="mr-auto" @click="_setForm" type="submit">Suivant</v-btn>
@@ -109,13 +115,18 @@ export default {
   methods: {
     ...mapMutations(["SET_DATA"]),
     ...mapActions(["getBigCategorie", "getSmallCategorie", "setSujet"]),
+
     _setForm() {
-      let arrayTag = this.newSmallCategorie.tag.split(" ");
-      this.newSmallCategorie.tag = arrayTag;
-      console.log("_setForm : " + this.newSmallCategorie);
+      let arrayTag = [];
+      if (arrayTag.lenght != 0) {
+        arrayTag = this.newSmallCategorie.tag.split(" ");
+        this.newSmallCategorie.tag = arrayTag;
+      }
+
       this.SET_DATA(this.newSmallCategorie);
     },
     submitSujet(event) {
+      this.dialog = false
       event.preventDefault();
       this.setSujet();
     },
@@ -146,14 +157,10 @@ export default {
 
 <style lang="scss" scoped>
 .fas {
-	cursor: pointer;
-	transition: 0.5s;
-	&:hover {
-		transform: rotate(90deg);
-	}
-		
+  cursor: pointer;
+  transition: 0.5s;
+  &:hover {
+    transform: rotate(90deg);
+  }
 }
-    
-
-	
 </style>

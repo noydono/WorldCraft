@@ -8,17 +8,16 @@ import router from "../router";
 // import { Object } from "core-js";
 
 export default new Vuex.Store({
-  
+
   state: {
     data: {},
     smallCategorie: [],
-    bigCategorie:[],
+    bigCategorie: [],
     sujet: []
   },
 
   mutations: {
     SET_DATA(state, value) {
-      console.log("SET_DATA : "+ value.tag)
       state.data = value;
     },
     SET_BCATEGORIE(state, bigCategorie) {
@@ -26,7 +25,7 @@ export default new Vuex.Store({
     },
     SET_SCATEGORIE(state, smallCategorie) {
       state.smallCategorie = smallCategorie;
-    }, 
+    },
     SET_SUJET(state, sujet) {
       state.sujet = sujet;
     },
@@ -34,8 +33,8 @@ export default new Vuex.Store({
 
   actions: {
     async setBigCategorie(context) {
-      await axios.post("http://localhost:4000/setBigCategorie", context.state.data);
-      router.push("/");
+      await axios.post("http://localhost:4000/setBigCategorie", context.state.data)
+      router.push({ name: "Forum" })
     },
     async getBigCategorie(context) {
       const { data: bigCategorie } = await axios.get("http://localhost:4000/getBigCategorie");
@@ -43,7 +42,7 @@ export default new Vuex.Store({
     },
     async setSmallCategorie(context) {
       await axios.post("http://localhost:4000/setSmallCategorie", context.state.data);
-      router.push("/");
+      router.push({ name: "Forum" })
     },
     async getSmallCategorie(context) {
       const { data: smallCategorie } = await axios.get("http://localhost:4000/getSmallCategorie");
@@ -51,11 +50,10 @@ export default new Vuex.Store({
     },
     async setSujet(context) {
       await axios.post("http://localhost:4000/setSujet", context.state.data);
-      router.push("/");
+      router.push({ name: "Forum" })
     },
-    async getSujet(context,id) {
-      console.log("getSujet Actions id:" + id)
-      const { data: sujet } = await axios.get("http://localhost:4000/getSmallCategorie/"+ id);
+    async getSujet(context, id) {
+      const { data: sujet } = await axios.get("http://localhost:4000/getSmallCategorie/" + id);
       context.commit("SET_SUJET", sujet);
     },
   },

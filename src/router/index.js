@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 let router = new VueRouter({
+  mode:'history',
   routes: [
     
     //PAGES Principale
@@ -11,7 +12,7 @@ let router = new VueRouter({
       path: '/',
       component: () => import('../layouts/main.vue'),
       children: [{
-        path: '/',
+        path:'',
         name: 'Home',
         component: () => import('../views/Home.vue')
       }]
@@ -38,7 +39,7 @@ let router = new VueRouter({
       component:() => import('../layouts/main.vue'),
       children:[{
         path:'',
-        name:"listSujet",
+        name:"ListSujet",
         component: () => import('../views/listSujet.vue')
       }]
     },{
@@ -68,8 +69,13 @@ let router = new VueRouter({
         name: 'AdminPage',
         component: () => import('../views/Admin.vue')
       }]
+    },
+    {
+      path:'*',
+      redirect: '/'
     }
-  ]
+  ],
+  
 })
 
 export default router

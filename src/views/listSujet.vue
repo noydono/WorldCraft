@@ -11,8 +11,8 @@
 
 <script>
 
-import listSujetComp from "../components/Forum/listSujetComp";
-import bannerComp from "../components/Forum/bannerComp";
+import listSujetComp from "../components/Forum/listSujet";
+import bannerComp from "../components/Forum/banner";
 export default {
 
   components: {

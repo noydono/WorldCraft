@@ -35,7 +35,6 @@
                   class="subtitle-1 mt-1 grey--text text--darken-4"
                   v-text="subItem.title"
                 ></div>
-                <v-chip x-small class="ma-2 grey"> nouveaux </v-chip>
               </div>
 
               <v-list-item-title
@@ -88,10 +87,13 @@ export default {
         page: 1,
         rowsPerPage: 10,
       },
+      news: false
     };
   },
   created() {
     this.getSujet(this.$route.params.id);
+  },
+  mounted(){
     
   },
   methods: {

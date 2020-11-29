@@ -8,7 +8,12 @@ module.exports = {
       name: req.body.name
     }
     BCategorie.create(data, (err) => {
-      (err) ? console.log('erreur Set BigCategorie : **********' + err) : console.log('bigCategorie create')
+      if (err) {
+        console.log('erreur Set BigCategorie : **********' + err)
+      } else {
+        console.log('bigCategorie create')
+        res.send()
+      }
     })
   },
   getBigCategorie: async (req, res) => {
@@ -21,7 +26,12 @@ module.exports = {
     }
 
     SCategorie.create(data, (err) => {
-      (err) ? console.log('erreur Set SmallCategorie : **********' + err) : console.log('smallCategorie create')
+      if (err) {
+        console.log('erreur Set SmallCategorie : **********' + err)
+      } else {
+        console.log('smallCategorie create')
+        res.send()
+      }
     })
   },
   getSmallCategorie: async (req, res) => {
@@ -34,13 +44,17 @@ module.exports = {
     }
 
     Sujet.create(data, (err) => {
-      (err) ? console.log('erreur Set Sujet : **********' + err) : console.log('sujet create')
-    })
+      if (err) {
+        console.log('erreur create setSujet : **********' + err)
+      } else {
+        console.log('setSujet create')
+        res.send()
+      }    })
   },
   getSujet: async (req, res) => {
 
     var id = req.params.id
-    console.log("getSujet" )
+    console.log("getSujet")
     var data = await Sujet.find({ categorieSmall_id: id });
     res.send(data)
 
