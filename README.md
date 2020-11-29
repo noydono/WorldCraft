@@ -8,7 +8,6 @@ Forum minecraft for builder
 ## Project setup
 ```
 npm install
-sudo mongod
 
 ```
 
