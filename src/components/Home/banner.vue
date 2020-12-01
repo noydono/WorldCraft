@@ -1,5 +1,5 @@
 <template>
-  <v-row class="mt-8">
+  
     <v-card class="mx-auto" width="1000" outlined>
      <v-img
       class="white--text align-end d-flex flex-row align-center"
@@ -10,5 +10,5 @@
     <v-card-title class="d-flex justify-center"> connecter vous pour plus de plaisir pub ou autre</v-card-title>
     </v-img>
     </v-card>
-  </v-row>
+  
 </template>

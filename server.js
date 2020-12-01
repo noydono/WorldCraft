@@ -4,6 +4,7 @@ const express = require("express"),
     cors = require("cors"),
     mongoose = require("mongoose"),
     methodOverride = require("method-override"),
+    morgan = require('morgan')
     port = 4000;
 
 
@@ -26,6 +27,8 @@ mongoose.connect(keys.mongoUri,{
 app.use(methodOverride("X-HTTP-Method-Override"));
 
 app.use(bodyParser.json());
+
+app.use(morgan("dev"));
 
 app.use(cors());
 

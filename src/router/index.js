@@ -43,25 +43,17 @@ let router = new VueRouter({
         component: () => import('../views/listSujet.vue')
       }]
     },{
-      path:'/Article/:id',
+      path:'/article/:id',
       component:() => import('../layouts/main.vue'),
       children:[{
         path:'',
-        name:"ArticleId",
+        name:"Article",
         component: () => import('../views/ArticleId.vue')
       }]
     },
     
     //PAGES AUTH
     {
-      path: '/login',
-      component: () => import('../layouts/main.vue'),
-      children: [{
-        path: '',
-        name: 'LoginPage',
-        component: () => import('../views/Login.vue')
-      }]
-    },{
       path: '/admin',
       component: () => import('../layouts/main.vue'),
       children: [{
@@ -71,11 +63,35 @@ let router = new VueRouter({
       }]
     },
     {
+      path: '/userdetail',
+      meta: {
+        requiresAuth: true
+      },
+      component: () => import('../layouts/main.vue'),
+      children: [{
+        path: '',
+        name: 'userDetail',
+        component: () => import('../views/userDetail.vue')
+      }]
+    },
+    {
       path:'*',
       redirect: '/'
-    }
-  ],
-  
+    },
+    
+  ]
 })
-
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.getItem("jwt") == null) {
+      next({
+        path: "Home"
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+})
 export default router

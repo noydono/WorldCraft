@@ -15,9 +15,11 @@
       <v-toolbar-title>WorldCraft</v-toolbar-title>
       <v-btn link to="/" class="ml-auto mt-2" text>Accueil</v-btn>
       <v-btn link to="/forum" class="mt-2" text>Forum</v-btn>
-      <v-btn link to="/login" class="mt-2" text>Se connecter</v-btn>
-      <v-btn link to="/admin" class="mt-2" text>admin</v-btn>
-      <createSujet />
+      <v-btn v-if=" isAdmin == true " link to="/admin" class="mt-2" text>admin</v-btn>
+      <v-btn v-if=" login == true " link to="/userdetail" class="mt-2" text>mon Compte</v-btn>
+      <v-btn v-if=" login == true " link @click="logUserOut()" class="mt-2" text>déconnection</v-btn>
+      <createSujet v-if=" login == true " />
+      <auth v-if=" login == false " />
     </v-app-bar>
     <v-content class="grey lighten-5">
       <v-breadcrumbs :items="items">
@@ -53,6 +55,9 @@
 
 <script>
 import createSujet from "../components/global/createSujet";
+import auth from "../components/global/auth";
+import {mapState , mapActions} from "vuex";
+
 
 export default {
   props: {
@@ -91,9 +96,18 @@ export default {
       },
     ],
   }),
-  methods: {},
+  methods: {
+    ...mapActions(["UserOut"]),
+    logUserOut() {
+      this.UserOut()
+    }
+  },
+  computed:{
+    ...mapState(["login","isAdmin"]),
+  },
   components: {
     createSujet,
+    auth
   },
 };
 </script>

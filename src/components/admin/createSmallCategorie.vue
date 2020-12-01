@@ -3,6 +3,13 @@
     <v-col>
       <h1>create Small categorie</h1>
       <form @submit="submitSmallCategorie">
+         <v-select
+          :items="bigCategorie"
+          item-text="name"
+          item-value="_id"
+          label="Big Categorie"
+          v-model="newSmallCategorie.categorieBig_id"
+        ></v-select>
         <v-text-field
           v-model="newSmallCategorie.name"
           label="Titre de la smallCategorie"
@@ -11,13 +18,6 @@
           v-model="newSmallCategorie.description"
           label="description de la smallCategorie"
         ></v-text-field>
-        <v-select
-          :items="bigCategorie"
-          item-text="name"
-          item-value="_id"
-          label="Big Categorie"
-          v-model="newSmallCategorie.categorieBig_id"
-        ></v-select>
         <v-btn @click="_setForm" type="submit">crée Small categorie</v-btn>
       </form>
     </v-col>

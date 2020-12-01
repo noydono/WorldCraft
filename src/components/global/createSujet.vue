@@ -88,6 +88,7 @@
           <v-text-field
             v-model="newSmallCategorie.tag"
             label="Tag du sujet"
+            @change="formatTag()"
           ></v-text-field>
         </v-card-text>
 
@@ -117,16 +118,15 @@ export default {
     ...mapActions(["getBigCategorie", "getSmallCategorie", "setSujet"]),
 
     _setForm() {
-      let arrayTag = [];
-      if (arrayTag.lenght != 0) {
+        this.SET_DATA(this.newSmallCategorie);
+    },
+    formatTag(){  
+        let arrayTag = [];
         arrayTag = this.newSmallCategorie.tag.split(" ");
         this.newSmallCategorie.tag = arrayTag;
-      }
-
-      this.SET_DATA(this.newSmallCategorie);
     },
     submitSujet(event) {
-      this.dialog = false
+      this.dialog = false;
       event.preventDefault();
       this.setSujet();
     },

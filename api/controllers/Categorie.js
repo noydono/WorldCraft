@@ -54,8 +54,14 @@ module.exports = {
   getSujet: async (req, res) => {
 
     var id = req.params.id
-    console.log("getSujet")
     var data = await Sujet.find({ categorieSmall_id: id });
+    res.send(data)
+
+  },
+  getSujetId: async (req, res) => {
+
+    var id = req.params.id
+    var data = await Sujet.find({ _id: id });
     res.send(data)
 
   }

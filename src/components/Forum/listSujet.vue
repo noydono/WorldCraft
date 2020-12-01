@@ -20,12 +20,11 @@
         <v-subheader>Sujet</v-subheader>
         <v-list-item-group v-model="item" color="primary">
           <v-list-item
-            :to="subItem.link"
             v-for="subItem in cloneItems"
             :key="subItem._id"
-            @click="$router.push('/Article/12313661')"
+            :to="{ path: '/article/' + subItem._id }"
           >
-            <v-list-item-avatar class="mr-5">
+            <v-list-item-avatar class="mr-5 mt-6">
               <v-img src="https://cdn.vuetifyjs.com/images/lists/5.jpg"></v-img>
             </v-list-item-avatar>
 
