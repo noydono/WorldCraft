@@ -14,7 +14,7 @@ let router = new VueRouter({
       children: [{
         path:'',
         name: 'Home',
-        component: () => import('../views/Home.vue')
+        component: () => import('../views/Home_view.vue')
       }]
     },{
       path: '/contact',
@@ -22,7 +22,7 @@ let router = new VueRouter({
       children: [{
         path: '',
         name: 'Contact',
-        component: () => import('../views/Contact.vue')
+        component: () => import('../views/Contact_view.vue')
       }]
     },
     // PAGES FORUM 
@@ -32,7 +32,7 @@ let router = new VueRouter({
       children: [{
         path: '',
         name: 'Forum',
-        component: () => import('../views/Forum.vue')
+        component: () => import('../views/Forum_view.vue')
       }]
     },{
       path:'/listSujet/:id',
@@ -40,15 +40,15 @@ let router = new VueRouter({
       children:[{
         path:'',
         name:"ListSujet",
-        component: () => import('../views/listSujet.vue')
+        component: () => import('../views/ListSujet_view.vue')
       }]
     },{
       path:'/article/:id',
       component:() => import('../layouts/main.vue'),
       children:[{
         path:'',
-        name:"Article",
-        component: () => import('../views/ArticleId.vue')
+        name:"Sujet",
+        component: () => import('../views/Sujet_view.vue')
       }]
     },
     
@@ -59,7 +59,7 @@ let router = new VueRouter({
       children: [{
         path: '',
         name: 'AdminPage',
-        component: () => import('../views/Admin.vue')
+        component: () => import('../views/Admin_view.vue')
       }]
     },
     {
@@ -70,8 +70,8 @@ let router = new VueRouter({
       component: () => import('../layouts/main.vue'),
       children: [{
         path: '',
-        name: 'userDetail',
-        component: () => import('../views/userDetail.vue')
+        name: 'User',
+        component: () => import('../views/User_view.vue')
       }]
     },
     {

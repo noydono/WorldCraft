@@ -1,24 +1,25 @@
 <template>
   <v-container fluid>
-    <v-row class="home--row">
-      <bannerComp />
-      <cardHomeComp />
-      <topSujetComp class="sujet" />
+    <v-row >
+      <BannerComponent />
+      <CardComponent />
+      <TopSujetComponent class="sujet" />
     </v-row>
   </v-container>
 </template>
 
 <script>
-import cardHomeComp from "../components/Home/card";
-import topSujetComp from "../components/Home/topSujet";
-import bannerComp from "../components/Home/banner";
+
+import CardComponent from "../components/Home/CardComponent";
+import TopSujetComponent from "../components/Home/TopSujetComponent";
+import BannerComponent from "../components/Main/BannerComponent";
 
 export default {
   name: "Home",
   components: {
-    cardHomeComp,
-    topSujetComp,
-    bannerComp
+    CardComponent,
+    TopSujetComponent,
+    BannerComponent
   },
 };
 </script>
@@ -30,7 +31,7 @@ export default {
   .sujet {
     display: none;
   }
-  .home--row {
+  v-row{
     display: flex;
     flex-direction: column;
     justify-content: center;

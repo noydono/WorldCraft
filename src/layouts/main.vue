@@ -13,13 +13,13 @@
         ></v-img>
       </template>
       <v-toolbar-title>WorldCraft</v-toolbar-title>
-      <v-btn link to="/" class="ml-auto mt-2" text>Accueil</v-btn>
-      <v-btn link to="/forum" class="mt-2" text>Forum</v-btn>
-      <v-btn v-if=" isAdmin == true " link to="/admin" class="mt-2" text>admin</v-btn>
-      <v-btn v-if=" login == true " link to="/userdetail" class="mt-2" text>mon Compte</v-btn>
-      <v-btn v-if=" login == true " link @click="logUserOut()" class="mt-2" text>déconnection</v-btn>
-      <createSujet v-if=" login == true " />
-      <auth v-if=" login == false " />
+      <v-btn  to="/" class="ml-auto mt-2" text>Accueil</v-btn>
+      <v-btn  to="/forum" class="mt-2" text>Forum</v-btn>
+      <v-btn v-if=" isAdmin == true "  to="/admin" class="mt-2" text>admin</v-btn>
+      <v-btn v-if=" login == true "  to="/userdetail" class="mt-2" text>mon Compte</v-btn>
+      <v-btn v-if=" login == true "  @click="logUserOut()" class="mt-2" text>déconnection</v-btn>
+      <CreateSujetComponent v-if=" login == true " />
+      <AuthComponent v-if=" login == false " />
     </v-app-bar>
     <v-content class="grey lighten-5">
       <v-breadcrumbs :items="items">
@@ -33,29 +33,15 @@
 
     <v-footer color="grey darken-1" padless>
       <v-row justify="center" no-gutters>
-        <v-btn
-          v-for="(link, key4) in links"
-          :key="key4"
-          color="white"
-          text
-          rounded
-          class="my-2"
-          link
-          :to="link.redirect"
-          >{{ link.name }}</v-btn
-        >
-        <v-col class="grey py-4 text-center white--text" cols="12">
-          {{ new Date().getFullYear() }} —
-          <strong>WorldCraft</strong>
-        </v-col>
+        
       </v-row>
     </v-footer>
   </v-app>
 </template>
 
 <script>
-import createSujet from "../components/global/createSujet";
-import auth from "../components/global/auth";
+import CreateSujetComponent from "../components/Main/CreateSujetComponent";
+import AuthComponent from "../components/Main/AuthComponent";
 import {mapState , mapActions} from "vuex";
 
 
@@ -64,20 +50,7 @@ export default {
     source: String,
   },
   data: () => ({
-    links: [
-      {
-        name: "Accueil",
-        redirect: "/",
-      },
-      {
-        name: "Forum",
-        redirect: "/forum",
-      },
-      {
-        name: "Contactez-nous",
-        redirect: "/contact",
-      },
-    ],
+   
     items: [
       {
         text: "Dashboard",
@@ -106,8 +79,8 @@ export default {
     ...mapState(["login","isAdmin"]),
   },
   components: {
-    createSujet,
-    auth
+    CreateSujetComponent,
+    AuthComponent
   },
 };
 </script>
