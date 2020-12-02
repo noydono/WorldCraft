@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="600">
-    <template v-slot:activator="{ on, attrs }">
+    <template #:activator="{ on, attrs }">
       <v-btn class="mt-2" text v-bind="attrs" v-on="on"> Ce connecter </v-btn>
     </template>
 

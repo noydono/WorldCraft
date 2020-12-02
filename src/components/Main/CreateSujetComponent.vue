@@ -4,7 +4,7 @@
     persistent 
     max-width="600"
   >
-    <template v-slot:activator="{ on, attrs }">
+    <template #:activator="{ on, attrs }">
       <v-btn 
         class="mt-2" 
         text 
@@ -29,7 +29,7 @@
           :key="key"
           no-action
         >
-          <template v-slot:activator>
+          <template #:activator>
             <v-list-item-content>
               <h1 
                 style="font-size: 20px" 

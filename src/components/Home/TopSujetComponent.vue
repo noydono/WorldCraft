@@ -44,7 +44,7 @@
         Top 5 Sujet
       </v-card-title>
       <v-simple-table>
-        <template v-slot:default>
+        <template #:default>
           <thead>
             <tr>
               <th class="text-left">Sujet</th>
@@ -75,7 +75,7 @@
         Top 5 Utilisateur
       </v-card-title>
       <v-simple-table>
-        <template v-slot:default>
+        <template #:default>
           <thead>
             <tr>
               <th class="text-left">Nom</th>

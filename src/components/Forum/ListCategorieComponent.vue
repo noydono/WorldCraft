@@ -6,7 +6,7 @@
         :key="key"
         no-action
       >
-        <template v-slot:activator>
+        <template #:activator>
           <v-list-item-content>
 
             <h1 
