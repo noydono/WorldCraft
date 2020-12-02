@@ -1,14 +1,26 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="600">
+  <v-dialog 
+    v-model="dialog" 
+    persistent 
+    max-width="600"
+  >
     <template v-slot:activator="{ on, attrs }">
-      <v-btn class="mt-2" text v-bind="attrs" v-on="on"> Crée un sujet </v-btn>
+      <v-btn 
+        class="mt-2" 
+        text 
+        v-bind="attrs" 
+        v-on="on"
+      > Crée un sujet </v-btn>
     </template>
 
     <!-- crud Sujet récuperation de l'id de la catégorie -->
     <v-card v-if="selectCat == false">
       <v-card-title>
         <h3>Choisir une categorie</h3>
-        <i @click="dialog = false" class="fas fa-times ml-auto"></i>
+        <i 
+          @click="dialog = false" 
+          class="fas fa-times ml-auto"
+        ></i>
       </v-card-title>
 
       <v-list width="100%">
@@ -19,7 +31,10 @@
         >
           <template v-slot:activator>
             <v-list-item-content>
-              <h1 style="font-size: 20px" v-text="categorieBig.name"></h1>
+              <h1 
+                style="font-size: 20px" 
+                v-text="categorieBig.name"
+              ></h1>
             </v-list-item-content>
           </template>
 
@@ -70,7 +85,10 @@
       <form @submit="submitSujet">
         <v-card-title>
           <h3>Creation de sujet</h3>
-          <i @click="dialog = false" class="fas fa-times ml-auto"></i>
+          <i 
+            @click="dialog = false" 
+            class="fas fa-times ml-auto"
+          ></i>
         </v-card-title>
 
         <v-card-text>
@@ -93,8 +111,15 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-btn color="green darken-1" @click="retour()">Annuler</v-btn>
-          <v-btn class="mr-auto" @click="_setForm" type="submit">Suivant</v-btn>
+          <v-btn 
+            color="green darken-1" 
+            @click="retour()"
+          >Annuler</v-btn>
+          <v-btn 
+            class="mr-auto" 
+            @click="_setForm" 
+            type="submit"
+          >Suivant</v-btn>
         </v-card-actions>
       </form>
     </v-card>

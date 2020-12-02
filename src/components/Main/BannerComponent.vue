@@ -1,6 +1,10 @@
 <template>
   
-    <v-card class="mx-auto" width="1000" outlined>
+    <v-card 
+      class="mx-auto" 
+      width="1000" 
+      outlined
+    >
      <v-img
       class="white--text align-end d-flex flex-row align-center"
       height="200px"

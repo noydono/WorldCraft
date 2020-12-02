@@ -1,7 +1,13 @@
 <template>
-  <v-col cols="3" class="mt-12 pt-7">
+  <v-col 
+    cols="3" 
+    class="mt-12 pt-7"
+  >
     <!-- tables top Tag -->
-    <v-card class="mb-5 mt-2" max-width="400">
+    <v-card 
+      class="mb-5 mt-2" 
+      max-width="400"
+    >
       <v-card-title>
         Top 5 Tag
       </v-card-title>
@@ -15,8 +21,14 @@
           </thead>
           <tbody>
             
-            <tr v-for="(item,key1) in tags" :key="key1">
-              <td><a href="https://google.com" class="link grey--text text--darken-3">{{ item.nameTag }}</a></td>
+            <tr 
+              v-for="(item,key1) in tags" 
+              :key="key1"
+            >
+              <td><a 
+                    href="https://google.com" 
+                    class="link grey--text text--darken-3"
+                  !>{{ item.nameTag }}</a></td>
               <td>{{ item.utilisation }}</td>
             </tr>
           </tbody>
@@ -24,7 +36,10 @@
       </v-simple-table>
     </v-card>
 
-    <v-card class="mb-5 mt-5" max-width="400">
+    <v-card
+      class="mb-5 mt-5" 
+      max-width="400"
+    >
       <v-card-title>
         Top 5 Sujet
       </v-card-title>
@@ -37,8 +52,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item,key2) in tags" :key="key2">
-              <td><a href="https://google.com" class="link grey--text text--darken-3">{{ item.nameTag }}</a></td>
+            <tr 
+              v-for="(item,key2) in tags" 
+              :key="key2"
+            >
+              <td><a 
+                    href="https://google.com" 
+                    class="link grey--text text--darken-3"
+                  >{{ item.nameTag }}</a></td>
               <td>{{ item.utilisation }}</td>
             </tr>
           </tbody>
@@ -46,7 +67,10 @@
       </v-simple-table>
     </v-card>
 
-    <v-card class="mb-5 mt-5" max-width="400">
+    <v-card 
+      class="mb-5 mt-5" 
+      max-width="400"
+    >
       <v-card-title>
         Top 5 Utilisateur
       </v-card-title>
@@ -59,8 +83,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item,key3) in tags" :key="key3">
-              <td><a href="https://google.com" class="link grey--text text--darken-3">{{ item.nameTag }}</a></td>
+            <tr 
+              v-for="(item,key3) in tags" 
+              :key="key3"
+            >
+              <td><a 
+                    href="https://google.com" 
+                    class="link grey--text text--darken-3"
+                  >{{ item.nameTag }}</a></td>
               <td>{{ item.utilisation }}</td>
             </tr>
           </tbody>

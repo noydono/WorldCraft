@@ -46,12 +46,19 @@
 
         <v-card-title>
           <h3>Crée un compte</h3>
-          <i @click="dialog = false" class="fas fa-times ml-auto"></i>
+          <i 
+            @click="dialog = false" 
+            class="fas fa-times ml-auto"
+          ></i>
         </v-card-title>
 
         <v-card-text>
           <div>
-            <v-text-field label="pseudo" v-model="User.pseudo" single-line></v-text-field>
+            <v-text-field 
+              label="pseudo" 
+              v-model="User.pseudo" 
+              single-line
+            ></v-text-field>
           </div>
           <div>
             <v-text-field
@@ -87,8 +94,14 @@
           </div>
         </v-card-text>
         <v-card-actions>
-          <a class="ml-2" @click="login = true"> Ce connecté</a>
-          <v-btn class="mr-auto" @click="_setForm" type="submit"
+          <a 
+            class="ml-2" 
+            @click="login = true"
+          > Ce connecté</a>
+          <v-btn 
+            class="mr-auto" 
+            @click="_setForm" 
+            type="submit"
             >s'enregister</v-btn>
         </v-card-actions>
       </form>

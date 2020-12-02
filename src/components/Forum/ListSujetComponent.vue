@@ -1,6 +1,9 @@
 <template>
   <v-row class="mt-12">
-    <v-card class="mx-auto" v-if="sujet.length != 0">
+    <v-card 
+      class="mx-auto" 
+      v-if="sujet.length != 0"
+    >
       <v-list
         :disabled="false"
         :dense="false"
@@ -18,7 +21,10 @@
         
       >
         <v-subheader>Sujet</v-subheader>
-        <v-list-item-group v-model="item" color="primary">
+        <v-list-item-group 
+          v-model="item" 
+          color="primary"
+        >
           <v-list-item
             v-for="subItem in cloneItems"
             :key="subItem._id"
@@ -66,7 +72,10 @@
         </v-list-item-group>
       </v-list>
     </v-card>
-    <v-card class="mx-auto text-center" v-if="sujet.length == 0">
+    <v-card 
+      class="mx-auto text-center" 
+      v-if="sujet.length == 0"
+    >
       <h2 class="py-5 px-5">oups !!!</h2>
       <p class="px-5">
         il n'y a pas encore de sujet soit le premier a en crée un.

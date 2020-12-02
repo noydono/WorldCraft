@@ -1,5 +1,10 @@
 <template>
-  <v-col cols="8" md="8" sm="12" class="mt-5">
+  <v-col 
+    cols="8" 
+    md="8" 
+    sm="12" 
+    class="mt-5"
+  >
     <div class="ml-8 ">
       <div class="title grey--text text--darken-3">Derniere publication :</div>
     </div>

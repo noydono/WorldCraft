@@ -8,7 +8,12 @@
       >
         <template v-slot:activator>
           <v-list-item-content>
-            <h1 style="font-size: 20px" v-text="categorieBig.name"></h1>
+
+            <h1 
+              style="font-size: 20px" 
+              v-text="categorieBig.name"
+            ></h1>
+
           </v-list-item-content>
         </template>
 
@@ -25,6 +30,7 @@
               style="font-size: 30px"
             ></v-icon>
           </v-list-item-icon>
+
           <v-list-item-content>
             <div class="d-flex flex-row justify-start align-start">
               <div
@@ -33,7 +39,6 @@
               ></div>
               <v-chip x-small class="ma-2 grey"> nouveaux </v-chip>
             </div>
-
             <v-list-item-title
               class="subtitle-2 grey--text"
               v-text="categorieSmall.description"
@@ -49,6 +54,7 @@
               <div class="subtitle-2 grey--text">26 juin - by pseudo</div>
             </v-list-item-title>
           </div>
+
         </v-list-item>
       </v-list-group>
     </v-list>
