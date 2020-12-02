@@ -28,7 +28,7 @@
               <td><a 
                     href="https://google.com" 
                     class="link grey--text text--darken-3"
-                  !>{{ item.nameTag }}</a></td>
+                  >{{ item.nameTag }}</a></td>
               <td>{{ item.utilisation }}</td>
             </tr>
           </tbody>
