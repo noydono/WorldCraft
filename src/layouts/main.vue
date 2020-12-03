@@ -6,35 +6,32 @@
       dark
       shrink-on-scroll
     >
-      <template v-slot:img="{ props }">
+      <template #img="{ props }">
         <v-img
           v-bind="props"
           gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
         ></v-img>
       </template>
+
       <v-toolbar-title>WorldCraft</v-toolbar-title>
-      <v-btn  to="/" class="ml-auto mt-2" text>Accueil</v-btn>
-      <v-btn  to="/forum" class="mt-2" text>Forum</v-btn>
-      <v-btn v-if=" isAdmin == true "  to="/admin" class="mt-2" text>admin</v-btn>
-      <v-btn v-if=" login == true "  to="/userdetail" class="mt-2" text>mon Compte</v-btn>
-      <v-btn v-if=" login == true "  @click="logUserOut()" class="mt-2" text>déconnection</v-btn>
-      <CreateSujetComponent v-if=" login == true " />
-      <AuthComponent v-if=" login == false " />
+      <v-btn to="/" class="ml-auto mt-2" text>Accueil</v-btn>
+      <v-btn to="/forum" class="mt-2" text>Forum</v-btn>
+      <v-btn v-if="isAdmin == true" to="/admin" class="mt-2" text>admin</v-btn>
+      <CreateSujetComponent v-if="loginState == true" />
+      <AuthComponent v-if="loginState == false" />
+      <v-btn v-if="loginState == true" to="/userdetail" class="mt-2" text
+        >mon Compte</v-btn
+      >
+      <v-btn v-if="loginState == true" @click="logUserOut()" class="mt-2" text
+        >déconnection</v-btn
+      >
     </v-app-bar>
     <v-content class="grey lighten-5">
-      <v-breadcrumbs :items="items">
-        <template v-slot:divider>
-          <v-icon>mdi-chevron-right</v-icon>
-        </template>
-      </v-breadcrumbs>
-
       <router-view />
     </v-content>
 
     <v-footer color="grey darken-1" padless>
-      <v-row justify="center" no-gutters>
-        
-      </v-row>
+      <v-row justify="center" no-gutters> </v-row>
     </v-footer>
   </v-app>
 </template>
@@ -42,45 +39,32 @@
 <script>
 import CreateSujetComponent from "../components/Main/CreateSujetComponent";
 import AuthComponent from "../components/Main/AuthComponent";
-import {mapState , mapActions} from "vuex";
-
+import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
-  props: {
-    source: String,
-  },
   data: () => ({
-   
-    items: [
-      {
-        text: "Dashboard",
-        disabled: false,
-        href: "breadcrumbs_dashboard",
-      },
-      {
-        text: "Link 1",
-        disabled: false,
-        href: "breadcrumbs_link_1",
-      },
-      {
-        text: "Link 2",
-        disabled: true,
-        href: "breadcrumbs_link_2",
-      },
-    ],
   }),
-  methods: {
-    ...mapActions(["UserOut"]),
-    logUserOut() {
-      this.UserOut()
+  created() {
+    let token = localStorage.getItem("jwt");
+    if (token) {
+      this.SET_LOGIN(true);
+    } else {
+      this.SET_LOGIN(false);
     }
   },
-  computed:{
-    ...mapState(["login","isAdmin"]),
+  methods: {
+    ...mapActions(["UserOut"]),
+    ...mapMutations(["SET_LOGIN"]),
+    logUserOut() {
+      this.UserOut();
+    },
+  },
+  computed: {
+    ...mapState(["isAdmin","loginState"]),
   },
   components: {
     CreateSujetComponent,
-    AuthComponent
+    AuthComponent,
   },
 };
 </script>

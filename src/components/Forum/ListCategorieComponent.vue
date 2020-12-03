@@ -2,31 +2,31 @@
   <v-row class="mt-12">
     <v-list width="100%">
       <v-list-group
-        v-for="(categorieBig, key) in bigCategorie"
+        v-for="(categorie, key) in categorieState"
         :key="key"
         no-action
       >
-        <template #:activator>
+        <template v-slot:activator>
           <v-list-item-content>
 
             <h1 
               style="font-size: 20px" 
-              v-text="categorieBig.name"
+              v-text="categorie.name"
             ></h1>
 
           </v-list-item-content>
         </template>
 
         <v-list-item
-          v-for="(categorieSmall, key) in filterSmallCategorie(
-            categorieBig._id
+          v-for="(section, key) in filterSection(
+            categorie._id
           )"
           :key="key"
-          :to="{ path: '/listSujet/' + categorieSmall._id }"
+          :to="{ path: '/listSujet/' + section._id }"
         >
           <v-list-item-icon class="mt-6 grey--text text--darken-2">
             <v-icon
-              v-text="categorieSmall.icon"
+              v-text="section.icon"
               style="font-size: 30px"
             ></v-icon>
           </v-list-item-icon>
@@ -35,19 +35,19 @@
             <div class="d-flex flex-row justify-start align-start">
               <div
                 class="subtitle-1 mt-1 grey--text text--darken-4"
-                v-text="categorieSmall.name"
+                v-text="section.name"
               ></div>
               <v-chip x-small class="ma-2 grey"> nouveaux </v-chip>
             </div>
             <v-list-item-title
               class="subtitle-2 grey--text"
-              v-text="categorieSmall.description"
+              v-text="section.description"
             ></v-list-item-title>
           </v-list-item-content>
 
           <div class="d-flex flex-row justify-center align-center">
             <v-list-item-avatar class="mr-5">
-              <v-img :src="categorieSmall.avatar"></v-img>
+              <v-img :src="section.avatar"></v-img>
             </v-list-item-avatar>
             <v-list-item-title>
               <div class="subtitle-1 black--text">titre du sujet</div>
@@ -69,16 +69,16 @@ export default {
     return {};
   },
   created() {
-    this.getBigCategorie();
-    this.getSmallCategorie();
+    this.getCategorie();
+    this.getSection();
   },
   methods: {
-    ...mapActions(["getBigCategorie", "getSmallCategorie"]),
+    ...mapActions(["getCategorie", "getSection"]),
 
-    filterSmallCategorie(bId) {
+    filterSection(bId) {
       var arrayCat = [];
-      this.smallCategorie.forEach((item) => {
-        if (bId === item.categorieBig_id) {
+      this.sectionState.forEach((item) => {
+        if (bId === item.categorie_id) {
           arrayCat.push(item);
         }
       });
@@ -87,7 +87,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["bigCategorie", "smallCategorie"]),
+    ...mapState(["categorieState", "sectionState"]),
   },
 };
 </script>

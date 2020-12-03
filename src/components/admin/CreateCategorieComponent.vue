@@ -2,13 +2,13 @@
   <v-row>
     <v-col>
 
-      <h1>create Big categorie</h1>
+      <h1>create categorie</h1>
 
-      <form @submit="submitIdea">
+      <form @submit="submitCategorie">
 
         <v-text-field 
-          v-model="newCat.name" 
-          label="Titre de la BigCategorie" 
+          v-model="newCategorie.name" 
+          label="Titre de la Categorie" 
         >
         </v-text-field>
 
@@ -16,7 +16,7 @@
           @click="_setForm" 
           type="submit"
         >
-        crée Big categorie
+        crée une categorie
         </v-btn>
 
       </form>
@@ -31,31 +31,29 @@ import { mapMutations, mapActions, mapState } from "vuex";
 
 export default {
    data: () => ({
-      newCat:{},
+      newCategorie:{},
     }),
   methods: {
 
     ...mapMutations(["SET_DATA"]),
-    ...mapActions(["setBigCategorie"]),
+    ...mapActions(["setCategorie"]),
 
     _setForm() {
       //send data to mutation in state DATA
-      this.SET_DATA(this.newCat);
+      this.SET_DATA(this.newCategorie);
     },
 
-    submitIdea(event) {
+    submitCategorie(event) {
       event.preventDefault();
-      this.setBigCategorie();
+      this.setCategorie();
     },
     
   },computed: {
 
-    ...mapState(["bigCategorie"]),
+    ...mapState(["categorieState"]),
 
   },
 };
 
 </script>
 
-<style scoped>
-</style>

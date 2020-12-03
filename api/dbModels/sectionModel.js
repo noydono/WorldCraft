@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const categorieSmallSchema = new Schema({
+const sectionSchema = new Schema({
  name:String,
  description:String,
- categorieBig_id:String,
+ categorie_id:String,
  icon:{
     type: String,
     default:"far fa-comment-alt"
@@ -16,6 +16,7 @@ const categorieSmallSchema = new Schema({
 },
  updated_At:String,
 },{ timestamps: { createdAt: 'created_at' } });
-const categoriesmall = mongoose.model("SujetSmall", categorieSmallSchema);
 
-module.exports = categoriesmall;
+const section = mongoose.model("Section", sectionSchema);
+
+module.exports = section;

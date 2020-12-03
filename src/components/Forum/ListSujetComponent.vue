@@ -1,9 +1,6 @@
 <template>
   <v-row class="mt-12">
-    <v-card 
-      class="mx-auto" 
-      v-if="sujet.length != 0"
-    >
+    <v-card class="mx-auto" v-if="sujetState.length != 0">
       <v-list
         :disabled="false"
         :dense="false"
@@ -18,17 +15,13 @@
         :rounded="false"
         max-width="900"
         width="800"
-        
       >
         <v-subheader>Sujet</v-subheader>
-        <v-list-item-group 
-          v-model="item" 
-          color="primary"
-        >
+        <v-list-item-group v-model="item" color="primary">
           <v-list-item
             v-for="subItem in cloneItems"
             :key="subItem._id"
-            :to="{ path: '/article/' + subItem._id }"
+            :to="{ path: '/sujet/' + subItem._id }"
           >
             <v-list-item-avatar class="mr-5 mt-6">
               <v-img src="https://cdn.vuetifyjs.com/images/lists/5.jpg"></v-img>
@@ -62,7 +55,7 @@
             </div>
           </v-list-item>
           <v-pagination
-            v-if="sujet.length >= pagination.rowsPerPage"
+            v-if="sujetState.length >= pagination.rowsPerPage"
             v-model="pagination.page"
             :length="pages"
             circle
@@ -72,10 +65,7 @@
         </v-list-item-group>
       </v-list>
     </v-card>
-    <v-card 
-      class="mx-auto text-center" 
-      v-if="sujet.length == 0"
-    >
+    <v-card class="mx-auto text-center" v-if="sujetState.length == 0">
       <h2 class="py-5 px-5">oups !!!</h2>
       <p class="px-5">
         il n'y a pas encore de sujet soit le premier a en crée un.
@@ -95,26 +85,24 @@ export default {
         page: 1,
         rowsPerPage: 10,
       },
-      news: false
+      news: false,
     };
   },
   created() {
     this.getSujet(this.$route.params.id);
   },
-  mounted(){
-    
-  },
+  mounted() {},
   methods: {
     ...mapActions(["getSujet"]),
   },
   computed: {
-    ...mapState(["sujet"]),
-    
+    ...mapState(["sujetState"]),
+
     pages() {
-      return Math.ceil(this.sujet.length  / this.pagination.rowsPerPage);
+      return Math.ceil(this.sujetState.length / this.pagination.rowsPerPage);
     },
     cloneItems() {
-      var clone = JSON.parse(JSON.stringify(this.sujet));
+      var clone = JSON.parse(JSON.stringify(this.sujetState));
       var startFrom =
         this.pagination.page * this.pagination.rowsPerPage -
         this.pagination.rowsPerPage;

@@ -1,7 +1,7 @@
 <template>
   
     <v-card 
-      class="mx-auto" 
+      class="mx-auto mt-5" 
       width="1000" 
       outlined
     >

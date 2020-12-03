@@ -4,7 +4,7 @@
     persistent 
     max-width="600"
   >
-    <template #:activator="{ on, attrs }">
+    <template v-slot:activator="{ on, attrs }">
       <v-btn 
         class="mt-2" 
         text 
@@ -14,7 +14,7 @@
     </template>
 
     <!-- crud Sujet récuperation de l'id de la catégorie -->
-    <v-card v-if="selectCat == false">
+    <v-card v-if="selectCategorie == false">
       <v-card-title>
         <h3>Choisir une categorie</h3>
         <i 
@@ -25,29 +25,29 @@
 
       <v-list width="100%">
         <v-list-group
-          v-for="(categorieBig, key) in bigCategorie"
+          v-for="(categorie, key) in categorieState"
           :key="key"
           no-action
         >
-          <template #:activator>
+          <template v-slot:activator>
             <v-list-item-content>
               <h1 
                 style="font-size: 20px" 
-                v-text="categorieBig.name"
+                v-text="categorie.name"
               ></h1>
             </v-list-item-content>
           </template>
 
           <v-list-item
-            v-for="(categorieSmall, key) in filterSmallCategorie(
-              categorieBig._id
+            v-for="(section, key) in filterSmallCategorie(
+              categorie._id
             )"
             :key="key"
-            @click="SelectCat(categorieSmall._id)"
+            @click="SelectCategorie(section._id)"
           >
             <v-list-item-icon class="mt-6 grey--text text--darken-2">
               <v-icon
-                v-text="categorieSmall.icon"
+                v-text="section.icon"
                 style="font-size: 30px"
               ></v-icon>
             </v-list-item-icon>
@@ -55,20 +55,20 @@
               <div class="d-flex flex-row justify-start align-start">
                 <div
                   class="subtitle-1 mt-1 grey--text text--darken-4"
-                  v-text="categorieSmall.name"
+                  v-text="section.name"
                 ></div>
                 <v-chip x-small class="ma-2 grey"> nouveaux </v-chip>
               </div>
 
               <v-list-item-title
                 class="subtitle-2 grey--text"
-                v-text="categorieSmall.description"
+                v-text="section.description"
               ></v-list-item-title>
             </v-list-item-content>
 
             <div class="d-flex flex-row justify-center align-center">
               <v-list-item-avatar class="mr-5">
-                <v-img :src="categorieSmall.avatar"></v-img>
+                <v-img :src="section.avatar"></v-img>
               </v-list-item-avatar>
               <v-list-item-title>
                 <div class="subtitle-1 black--text">titre du sujet</div>
@@ -81,7 +81,7 @@
     </v-card>
 
     <!-- crud SUjet récuperation du titre, déscritpion, tag -->
-    <v-card v-if="selectCat == true">
+    <v-card v-if="selectCategorie == true">
       <form @submit="submitSujet">
         <v-card-title>
           <h3>Creation de sujet</h3>
@@ -93,18 +93,19 @@
 
         <v-card-text>
           <v-text-field
-            v-model="newSmallCategorie.title"
+            v-model="newSujet.title"
             label="Titre du sujet"
+            @change="_setForm()"
           ></v-text-field>
           <v-textarea
             outlined
-            v-model="newSmallCategorie.content"
+            v-model="newSujet.content"
             name="input-7-4"
             label="description de la sujet"
-            value="newSmallCategorie.description"
+            value="newSujet.description"
           ></v-textarea>
           <v-text-field
-            v-model="newSmallCategorie.tag"
+            v-model="newSujet.tag"
             label="Tag du sujet"
             @change="formatTag()"
           ></v-text-field>
@@ -117,7 +118,7 @@
           >Annuler</v-btn>
           <v-btn 
             class="mr-auto" 
-            @click="_setForm" 
+            @click="_setForm()" 
             type="submit"
           >Suivant</v-btn>
         </v-card-actions>
@@ -128,27 +129,34 @@
 
 <script>
 import { mapMutations, mapActions, mapState } from "vuex";
+import VueJwtDecode from "vue-jwt-decode";
+
 export default {
   data: () => ({
-    newSmallCategorie: {},
+    newSujet: {},
     dialog: false,
-    selectCat: false,
+    selectCategorie: false,
   }),
   created() {
-    this.getBigCategorie();
-    this.getSmallCategorie();
+    this.getCategorie();
+    this.getSection();
   },
   methods: {
     ...mapMutations(["SET_DATA"]),
-    ...mapActions(["getBigCategorie", "getSmallCategorie", "setSujet"]),
+    ...mapActions(["getCategorie", "getSection", "setSujet"]),
 
     _setForm() {
-        this.SET_DATA(this.newSmallCategorie);
+        let token = localStorage.getItem("jwt");
+        if(token){
+          let decoded = VueJwtDecode.decode(token);
+          this.newSujet.author = decoded.pseudo
+        }        
+        this.SET_DATA(this.newSujet);
     },
     formatTag(){  
         let arrayTag = [];
-        arrayTag = this.newSmallCategorie.tag.split(" ");
-        this.newSmallCategorie.tag = arrayTag;
+        arrayTag = this.newSujet.tag.split(" ");
+        this.newSujet.tag = arrayTag;
     },
     submitSujet(event) {
       this.dialog = false;
@@ -157,25 +165,25 @@ export default {
     },
     filterSmallCategorie(bId) {
       var arrayCat = [];
-      this.smallCategorie.forEach((item) => {
-        if (bId === item.categorieBig_id) {
+      this.sectionState.forEach((item) => {
+        if (bId === item.categorie_id) {
           arrayCat.push(item);
         }
       });
 
       return arrayCat;
     },
-    SelectCat(id) {
-      this.newSmallCategorie.categorieSmall_id = id;
-      this.selectCat = true;
+    SelectCategorie(id) {
+      this.newSujet.section_id = id;
+      this.selectCategorie = true;
     },
     retour() {
-      this.newSmallCategorie.categorieSmall_id = null;
-      this.selectCat = false;
+      this.newSujet.section_id = null;
+      this.selectCategorie = false;
     },
   },
   computed: {
-    ...mapState(["bigCategorie", "smallCategorie"]),
+    ...mapState(["categorieState", "sectionState"]),
   },
 };
 </script>

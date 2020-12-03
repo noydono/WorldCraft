@@ -13,84 +13,201 @@ export default new Vuex.Store({
 
   state: {
     data: {},
-    smallCategorie: [],
-    bigCategorie: [],
-    sujet: [],
-    sujetId: [],
-    login: false
- },
+    categorieState: [],
+    sectionState: [],
+    sujetState: [],
+    sujetIdState: [],
+    reponseState: [],
+    loginState: false
+  },
 
   mutations: {
+
+
+    /*
+    *
+    *  global mutations
+    * 
+    * * */
     SET_DATA(state, value) {
       state.data = value;
     },
-    SET_BCATEGORIE(state, bigCategorie) {
-      state.bigCategorie = bigCategorie;
+
+
+    /*
+    *
+    *  Gestion de Categorie
+    * 
+    * * */
+    SET_CATEGORIE(state, categorie) {
+      state.categorieState = categorie;
     },
-    SET_SCATEGORIE(state, smallCategorie) {
-      state.smallCategorie = smallCategorie;
+
+
+    /*
+    *
+    *  Gestion de section
+    * 
+    * * */
+    SET_SECTION(state, section) {
+      state.sectionState = section;
     },
+
+
+    /*
+    *
+    *  Gestion de sujet
+    * 
+    * * */
     SET_SUJET(state, sujet) {
-      state.sujet = sujet;
+      state.sujetState = sujet;
     },
+
     SET_SUJETID(state, sujetId) {
-      state.sujetId = sujetId;
+      state.sujetIdState = sujetId;
     },
+
+    /*
+    *
+    *  Gestion de reponse
+    * 
+    * * */
+    SET_REPONSE(state, reponse) {
+      state.reponseState = reponse;
+    },
+
+
+    /*
+    *
+    *  Gestion d'user
+    * 
+    * * */
     SET_LOGIN(state, value) {
-      state.login = value
+      state.loginState = value
     }
+
   },
 
   actions: {
-    
-    // CATEGORIE
-    async setBigCategorie(context) {
-      await axios.post("http://localhost:4000/setBigCategorie", context.state.data)
+
+    /*
+    *
+    *  Gestion de Categorie
+    * 
+    * * */
+    async setCategorie(context) {
+
+      await axios.post("http://localhost:4000/setCategorie", context.state.data)
       router.push({ name: "Forum" })
+
+
     },
-    async getBigCategorie(context) {
-      const { data: bigCategorie } = await axios.get("http://localhost:4000/getBigCategorie");
-      context.commit("SET_BCATEGORIE", bigCategorie);
+    async getCategorie(context) {
+
+      const { data: categorieState } = await axios.get("http://localhost:4000/getCategorie");
+      context.commit("SET_CATEGORIE", categorieState );
+
     },
-    async setSmallCategorie(context) {
-      await axios.post("http://localhost:4000/setSmallCategorie", context.state.data);
+   
+
+    /*
+    *
+    *  Gestion de Section
+    * 
+    * * */
+    async setSection(context) {
+
+      await axios.post("http://localhost:4000/setSection", context.state.data);
       router.push({ name: "Forum" })
+
     },
-    async getSmallCategorie(context) {
-      const { data: smallCategorie } = await axios.get("http://localhost:4000/getSmallCategorie");
-      context.commit("SET_SCATEGORIE", smallCategorie);
+    async getSection(context) {
+
+      const { data: sectionState } = await axios.get("http://localhost:4000/getSection");
+      context.commit("SET_SECTION", sectionState);
+
     },
 
-    // SUJET
+    
+    /*
+    *
+    *  Gestion de Sujet
+    * 
+    * * */
     async setSujet(context) {
+
       await axios.post("http://localhost:4000/setSujet", context.state.data);
       router.push({ name: "Forum" }).catch(() => { });
+
     },
     async getSujet(context, id) {
-      const { data: sujet } = await axios.get("http://localhost:4000/getSmallCategorie/" + id);
-      context.commit("SET_SUJET", sujet);
+
+      const { data: sujetState } = await axios.get("http://localhost:4000/getSujet/" + id);
+      context.commit("SET_SUJET", sujetState);
+
     },
     async getSujetId(context, id) {
-      const { data: sujetId } = await axios.get("http://localhost:4000/getSujet/" + id);
-      context.commit("SET_SUJETID", sujetId);
+
+      const { data: sujetIdState } = await axios.get("http://localhost:4000/getSujetId/" + id);
+      context.commit("SET_SUJETID", sujetIdState);
+
     },
 
-    // AUTH
+    /*
+    *
+    *  Gestion de Reponse
+    * 
+    * * */
+   async setReponse(context) {
+    try{
+
+      await axios.post("http://localhost:4000/setReponse", context.state.data);
+      router.push({ name: "Forum" }).catch(() => { });
+      swal("Sucess", "Votre reponse a été poster ", "success");
+    
+    }catch(err){
+      swal("Error", "Quelque chose s'est mal passé : " + err, "error");
+    }
+    
+
+  },
+  async getReponse(context, id) {
+    try{
+
+      const { data: reponseState } = await axios.get("http://localhost:4000/getReponse/" + id);
+      context.commit("SET_REPONSE", reponseState);
+    
+    }catch(err){
+      console.log("err getReponse : " + err )
+    }
+    
+
+  },
+
+    
+    /*
+    *
+    *  Gestion d'User
+    * 
+    * * */
     async setLogin(context) {
+      
       try {
         let response = await axios.post("http://localhost:4000/login", context.state.data);
-        context.commit("SET_LOGIN" , true )
+        context.commit("SET_LOGIN", true)
         let token = response.data.token;
         localStorage.setItem("jwt", token);
         if (token) {
-          swal("Success", "connection reussi", "success");
+          swal("Success", "Connexion reussi", "success");
           router.push("Home").catch(() => { });
         }
       } catch (err) {
         swal("Error", "Quelque chose s'est mal passé : ", "error");
       }
+
     },
     async setRegister(context) {
+
       try {
         let response = await axios.post("http://localhost:4000/register", context.state.data);
         console.log(response);
@@ -99,7 +216,7 @@ export default new Vuex.Store({
           console.log("token: " + token);
           localStorage.setItem("jwt", token);
           router.push("Home").catch(() => { });
-          swal("Success", "Enregistrement reussi", "success");
+          swal("Success", "Enregistrement réussi", "success");
         } else {
           swal("Error", "Quelque chose s'est mal passé : " + response.data.err, "error");
         }
@@ -111,17 +228,20 @@ export default new Vuex.Store({
           swal("Error", error.data.err.message, "error");
         }
       }
+
     },
     async UserOut(context) {
+
       localStorage.removeItem("jwt");
       context.commit("SET_LOGIN", false)
-      router.push("/").catch(()=>{});
-      swal("Success", "déconnexion reussi", "success");
+      router.push("Home").catch(() => { });
+      swal("Success", "déconnexion réussi", "success");
+
     }
-    
-    //     async getUserDetail(context{
-    //       import VueJwtDecode from "vue-jwt-decode";
-    // getUserDetails() {
+
+    //       async getUserDetail(context{
+    //       getUserDetails() {
+    //      import VueJwtDecode from "vue-jwt-decode";
     //       let token = localStorage.getItem("jwt");
     //       let decoded = VueJwtDecode.decode(token);
     //       this.user = decoded;

@@ -3,26 +3,25 @@
     <v-row>
       <v-col>
         <h1>admin</h1>
-        <CreateBigCategorieComponent/>
-        <CreateSmallCategorieComponent/>
-        
+        <CreateCategorieComponent/>
+        <CreateSectionComponent/>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import CreateBigCategorieComponent from '../components/admin/CreateBigCategorieComponent'
-import CreateSmallCategorieComponent from '../components/admin/CreateSmallCategorieComponent'
+import CreateCategorieComponent from '../components/admin/CreateCategorieComponent'
+import CreateSectionComponent from '../components/admin/CreateSectionComponent'
 
 export default {
-  name: "Forum",
+  name: "Admin",
   data() {
     return {};
   },
   components: {
-    CreateBigCategorieComponent,
-    CreateSmallCategorieComponent,
+    CreateCategorieComponent,
+    CreateSectionComponent,
     
   },
 };
