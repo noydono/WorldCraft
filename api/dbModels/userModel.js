@@ -14,9 +14,17 @@ const userSchema = mongoose.Schema({
     type: String,
     required: [true, "Password obligatoire"]
   },
+  role:{
+    type:String,
+    default:"non assigner"
+  },
   isAdmin: {
     type: Boolean,
     default : false,
+  },
+  isVerified:{
+    type: Boolean,
+    default: false
   },
   tokens: [
     {
@@ -26,7 +34,7 @@ const userSchema = mongoose.Schema({
       }
     }
   ]
-});
+},{ timestamps: { createdAt: 'created_at' }});
 
 //this method will hash the password before saving the user model
 userSchema.pre("save", async function(next) {
@@ -43,7 +51,14 @@ userSchema.pre("save", async function(next) {
 userSchema.methods.generateAuthToken = async function() {
 
   const user = this;
-  const token = jwt.sign({ _id: user._id, pseudo: user.pseudo, email: user.email },
+  const token = jwt.sign({ 
+    _id: user._id, 
+    pseudo: user.pseudo, 
+    email: user.email, 
+    created_at : user.created_at, 
+    role : user.role,
+    isVerified : user.isVerified
+  },
   "secret");
   user.tokens = user.tokens.concat({ token });
   await user.save();

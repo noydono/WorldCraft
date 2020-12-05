@@ -1,131 +1,149 @@
 <template>
-  <v-container class="mx-auto">
-    <v-row>
-      <v-col class="d-flex flex-column align-center justify-center">
-        <v-card width="1000px" v-for="(sujet, key) in sujetIdState" :key="key">
-          <v-card-text>
-            <h1
-              class="pink--text text--accent-1 mt-2"
-              v-text="sujet.title"
-            ></h1>
-          </v-card-text>
+  <v-container class="">
+    <h2 class="display-3 mb-3"></h2>
 
-          <v-card-text class="text-justify">
-            {{ sujet.content }}
-          </v-card-text>
-          <div class="mt-2">
-            <v-chip
-              class="ma-2"
-              v-for="(tag, key) in sujet.tag"
-              :key="key"
-              v-text="tag"
-            ></v-chip>
-          </div>
-          <v-card-actions>
-            <div class="ml-2" style="font-size: 15px">
-              Posté le
-              <span v-html="date()"></span>
-              par
-              <a href="">{{ sujet.author }}</a>
-            </div>
 
-            <v-btn class="ml-auto" text color="pink accent-1">
-              <i class="far fa-heart"></i>
-              <span>123124</span>
-            </v-btn>
+    <v-card
+      v-for="(sujet, key) in sujetIdState"
+      :key="key"
+      class="mb-9"
+      style="border: 1px solid grey"
+    >
+      <v-card-title
+        class="blue-grey lighten-3"
+        style="height: 55px; padding: 0 0 0 30px !important"
+        
+      >
+      {{ sujet.title }}
 
-            <v-btn text color="pink accent-1">
-              <i class="far fa-bell"></i>
-              <span>123124</span>
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-
-        <v-card class="mt-5" width="1000px">
-          <v-card-title>
-            <span>Reponse</span>
-          </v-card-title>
-          <v-card-text>
-            <v-list-item-group color="primary">
-              <v-list-item
-                style="height: 150px"
-                v-for="(reponse, key) in cloneItems"
-                :key="key"
-              >
-                <v-container>
-                  <v-row class="blue lighten-5"> 
-                    <v-col
-                      class=" d-flex flex-column justify-center align-center blue lighten-4"
-                      md="2"
-                    >
-                    <span class="text-justify">
-                        {{ reponse.author }}
-                      </span>
-                      <v-avatar  size="62">
-                        <v-img
-                          src="https://cdn.vuetifyjs.com/images/lists/5.jpg"
-                        ></v-img>
-                      </v-avatar>
-                      
-                    </v-col>
-                    <v-col md="8" class="m-3">{{ reponse.content }}</v-col>
-                  </v-row>
-                </v-container>
-              </v-list-item>
-              <v-pagination
-                v-if="reponseState.length >= pagination.rowsPerPage"
-                v-model="pagination.page"
-                :length="pages"
-                circle
-                color="light-green darken-1"
-                class="pb-5"
-              ></v-pagination>
-            </v-list-item-group>
-          </v-card-text>
-        </v-card>
-        <form @submit="submitReponse">
-          <v-card
-            v-if="loginState === true"
-            width="1000px"
-            class="mt-5 d-flex flex-column align-center justify-center"
+      <span class=" subtitle-2 ml-auto mr-3">{{date(sujet.created_at)}}</span>
+      </v-card-title>
+      <v-card-text style="padding: 0 12px 0 12px !important">
+        <v-row>
+          <v-col
+            style="
+              height: 100%;
+              border-top: 1px solid grey;
+              border-right: 1px solid grey;
+            "
+            md="2"
+            class="d-flex flex-column align-center justify-center"
           >
-            <v-card-title>
-              <span>Ajoute ta réponse</span>
-            </v-card-title>
-            <v-card-text style="width: 500px">
-              <v-textarea
-                v-model="newReponse.content"
-                outlined
-                label="Commenter"
-                value
-                class="mt-5"
-              ></v-textarea>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn
-                @click="_setForm()"
-                type="submit"
-                class="float-right mb-5 mr-5"
-                >envoyer</v-btn
-              >
-            </v-card-actions>
-          </v-card>
-          <v-card
-            class="mt-5 d-flex flex-column align-center justify-center"
-            v-if="loginState === false"
+            <span>{{ sujet.author }}</span>
+            <v-avatar class="mt-2" color="orange" size="62">
+              <span class="white--text headline">62</span>
+            </v-avatar>
+            <span class="mt-2">Builder</span>
+            <span class="mt-2"> <strong>date : </strong> 6/12/21212 </span>
+            <span> <strong>post</strong> : 1212</span>
+          </v-col>
+          <v-col
+            style="height: 100%; border-top: 1px solid grey"
+            md="10"
+            class=""
           >
-            <v-card-text> connect toi pour commenter </v-card-text>
-          </v-card>
-        </form>
-      </v-col>
+            <h2>
+              
+            </h2>
+            <p class="mt-5 text-justify">
+              {{ sujet.content }}
+            </p>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+
+    <h3>Reponse :</h3>
+
+
+    <v-row class="underline">
     </v-row>
+
+
+     <v-card 
+      v-for="(reponse,key) in cloneItems"
+      :key="key"
+      class="reponse-card mt-7 "
+    >
+      <v-card-title
+        class="blue-grey lighten-3 subtitle-2 reponse-card-title"
+        
+      >
+      <span class=" subtitle-2 ml-auto mr-3">{{date(reponse.created_at)}}</span>
+
+      </v-card-title>
+      <v-card-text style="padding: 0 12px 0 12px !important">
+        <v-row>
+          <v-col
+            md="2"
+            class="d-flex flex-column align-center justify-center reponse-card-col-author"
+          >
+            <span>{{ reponse.author }}</span>
+            <v-avatar class="mt-2" color="orange" size="62">
+              <span class="white--text headline">62</span>
+            </v-avatar>
+            <span class="mt-2">Builder</span>
+            <span class="mt-2"> <strong>date : </strong> 6/12/21212 </span>
+            <span> <strong>post</strong> : 1212</span>
+          </v-col>
+          <v-col
+            md="10"
+            class="reponse-card-col-content"
+          >
+            <p class="mt-5 ml-5 text-justify">
+              {{ reponse.content }}
+            </p>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card> 
+
+    <v-pagination
+      v-if="reponseState.length >= pagination.rowsPerPage"
+      v-model="pagination.page"
+      :length="pages"
+      circle
+      color="light-green darken-1"
+      class="mt-4"
+    ></v-pagination>
+
+    <form @submit="submitReponse">
+      <v-card
+        v-if="loginState === true"
+        class="mt-5 d-flex flex-column align-center justify-center"
+      >
+        <v-card-title>
+          <span>Ajoute ta réponse</span>
+        </v-card-title>
+        <v-card-text style="width: 500px">
+          <v-textarea
+            v-model="newReponse.content"
+            outlined
+            label="Commenter"
+            value
+            class="mt-5"
+          ></v-textarea>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn @click="_setForm()" type="submit" class="float-right mb-5 mr-5"
+            >envoyer</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+      <v-card
+        class="mt-5 d-flex flex-column align-center justify-center"
+        v-if="loginState === false"
+      >
+        <v-card-text> connect toi pour commenter </v-card-text>
+      </v-card>
+    </form>
   </v-container>
 </template>
-
+          
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
 import VueJwtDecode from "vue-jwt-decode";
-
+import moment from "moment";
 export default {
   data() {
     return {
@@ -158,17 +176,30 @@ export default {
       event.preventDefault();
       this.setReponse();
     },
-    date() {
-      let SujetDate = this.sujetIdState[0].created_at,
-        d = new Date(SujetDate),
-        options = {
-          weekday: "short",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        };
-      d = d.toLocaleDateString("fr-FR", options);
-      return `${d}`;
+    date(date) {
+      let d = new Date(date);
+      let m = moment(d);
+      moment.updateLocale("en", {
+        relativeTime: {
+          future: "dans %s",
+          past: "%s depuis",
+          s: "quelques secondes",
+          ss: "%d secondes",
+          m: "une minute",
+          mm: "%d minute",
+          h: "une heure",
+          hh: "%d heure",
+          d: "un jour",
+          dd: "%d jour",
+          w: "une semaine",
+          ww: "%d semaine",
+          M: "un mois",
+          MM: "%d mois",
+          y: "une année",
+          yy: "%d année",
+        },
+      });
+      return m.fromNow();
     },
   },
   computed: {
@@ -188,7 +219,7 @@ export default {
 };
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 .author
   text-decoration: none
   &:hover
@@ -199,4 +230,25 @@ export default {
 
 .reponse-citation
   overflow-wrap: anywhere
+
+.underline
+  padding: 1px
+  background-color: grey
+
+.reponse-card-col-content
+  height: 100%
+  border-top: 1px solid grey
+
+.reponse-card-col-author
+  height: 100%
+  border-top: 1px solid grey
+  border-right: 1px solid grey
+
+.reponse-card-title
+  height: 55px 
+  padding: 0 0 0 30px !important
+
+.reponse-card
+  border: 1px solid grey
+
 </style>

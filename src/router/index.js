@@ -14,7 +14,7 @@ let router = new VueRouter({
       children: [{
         path:'',
         name: 'Home',
-        component: () => import('../views/Home_view.vue')
+        component: () => import('../views/Forum_view.vue')
       }]
     },{
       path: '/contact',
@@ -24,17 +24,9 @@ let router = new VueRouter({
         name: 'Contact',
         component: () => import('../views/Contact_view.vue')
       }]
-    },
+    }
     // PAGES FORUM 
-    {
-      path: '/forum',
-      component: () => import('../layouts/main.vue'),
-      children: [{
-        path: '',
-        name: 'Forum',
-        component: () => import('../views/Forum_view.vue')
-      }]
-    },{
+    ,{
       path:'/listSujet/:id',
       component:() => import('../layouts/main.vue'),
       children:[{
@@ -73,6 +65,10 @@ let router = new VueRouter({
         name: 'User',
         component: () => import('../views/User_view.vue')
       }]
+    },
+    {
+      path: '/verifyMail',
+      component: () => import('../views/VerifyMail_view.vue'),
     },
     {
       path:'*',

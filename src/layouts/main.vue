@@ -13,9 +13,8 @@
         ></v-img>
       </template>
 
-      <v-toolbar-title>WorldCraft</v-toolbar-title>
+      <v-toolbar-title >WorldCraft</v-toolbar-title>
       <v-btn to="/" class="ml-auto mt-2" text>Accueil</v-btn>
-      <v-btn to="/forum" class="mt-2" text>Forum</v-btn>
       <v-btn v-if="isAdmin == true" to="/admin" class="mt-2" text>admin</v-btn>
       <CreateSujetComponent v-if="loginState == true" />
       <AuthComponent v-if="loginState == false" />

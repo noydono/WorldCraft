@@ -1,11 +1,13 @@
 const express = require('express'),
+    multer = require('../config/multer-config'),
     router = express.Router()
 
 const categorieController = require("./controllers/CategorieController.js"),
     sectionController = require("./controllers/SectionController.js"),
     sujetController = require("./controllers/SujetController.js"),
     reponseController = require("./controllers/ReponseController.js"),
-    userController = require("./controllers/UserController.js");
+    userController = require("./controllers/UserController.js"),
+    mailerController = require("./controllers/nodemailController.js");
 
 const auth = require("./middleware/auth");
 
@@ -78,7 +80,19 @@ router.route("/login")
     .post(userController.loginUser);
 
 router.route("/me")
-    .get(auth,userController.getUserDetails);
+    .get(auth, userController.getUserDetails);
+
+
+
+/*
+ *
+ *  Gestion Mail
+ * 
+ * * */
+
+    
+router.route("/verify/:token")
+    .get(mailerController.verifMail)
 
 
 module.exports = router

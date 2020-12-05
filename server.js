@@ -15,6 +15,7 @@ mongoose.connect(keys.mongoUri,{
 
     useNewUrlParser: true ,
     useUnifiedTopology: true,
+    useFindAndModify: false
 
 },(err) => {
     if(err){
@@ -26,6 +27,7 @@ mongoose.connect(keys.mongoUri,{
 
 app.use(methodOverride("X-HTTP-Method-Override"));
 
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.use(morgan("dev"));

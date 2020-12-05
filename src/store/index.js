@@ -6,6 +6,7 @@ Vue.use(Vuex)
 import axios from "axios";
 import router from "../router";
 import swal from 'sweetalert';
+// import VueJwtDecode frosm "vue-jwt-decode";
 
 // import { Object } from "core-js";
 
@@ -141,7 +142,6 @@ export default new Vuex.Store({
 
     },
     async getSujet(context, id) {
-
       const { data: sujetState } = await axios.get("http://localhost:4000/getSujet/" + id);
       context.commit("SET_SUJET", sujetState);
 
@@ -162,7 +162,7 @@ export default new Vuex.Store({
     try{
 
       await axios.post("http://localhost:4000/setReponse", context.state.data);
-      router.push({ name: "Forum" }).catch(() => { });
+      router.push({ name: "Home" }).catch(() => { });
       swal("Sucess", "Votre reponse a été poster ", "success");
     
     }catch(err){
@@ -193,6 +193,7 @@ export default new Vuex.Store({
     async setLogin(context) {
       
       try {
+
         let response = await axios.post("http://localhost:4000/login", context.state.data);
         context.commit("SET_LOGIN", true)
         let token = response.data.token;
@@ -201,6 +202,7 @@ export default new Vuex.Store({
           swal("Success", "Connexion reussi", "success");
           router.push("Home").catch(() => { });
         }
+
       } catch (err) {
         swal("Error", "Quelque chose s'est mal passé : ", "error");
       }
@@ -209,24 +211,26 @@ export default new Vuex.Store({
     async setRegister(context) {
 
       try {
+
         let response = await axios.post("http://localhost:4000/register", context.state.data);
-        console.log(response);
         let token = response.data.token;
         if (token) {
-          console.log("token: " + token);
           localStorage.setItem("jwt", token);
           router.push("Home").catch(() => { });
-          swal("Success", "Enregistrement réussi", "success");
+          swal("Success", "Un Mail De verification vous a été envoyer", "success");
         } else {
           swal("Error", "Quelque chose s'est mal passé : " + response.data.err, "error");
         }
+
       } catch (err) {
+
         let error = err.response;
         if (error.status == 409) {
-          swal("Error", error.data.err.message, "error");
+          swal("Error",err, "error");
         } else {
-          swal("Error", error.data.err.message, "error");
+          swal("Error", err, "error");
         }
+
       }
 
     },
@@ -237,16 +241,10 @@ export default new Vuex.Store({
       router.push("Home").catch(() => { });
       swal("Success", "déconnexion réussi", "success");
 
-    }
+    },
+    async UpdateUserDetails(){
 
-    //       async getUserDetail(context{
-    //       getUserDetails() {
-    //      import VueJwtDecode from "vue-jwt-decode";
-    //       let token = localStorage.getItem("jwt");
-    //       let decoded = VueJwtDecode.decode(token);
-    //       this.user = decoded;
-    //     },
-    // })
+    }
   },
 
   modules: {

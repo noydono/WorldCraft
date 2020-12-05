@@ -1,29 +1,22 @@
 <template>
   <v-container class="mx-auto">
-    <v-row>
-      <h1>user detaile</h1>
-    </v-row>
+  
+      <UserDetailsComponents />
+  
   </v-container>
 </template>
 
 <script>
-
+import UserDetailsComponents from '../components/user/UserDetailComponent'
 
 export default {
   data() {
     return {
     };
   },
-  created() {
-    
-  },
-  mounted() {},
-  methods: {
-    
-  },
-  computed: {
-    
-  },
+  components:{
+    UserDetailsComponents
+  }
 };
 </script>
 
