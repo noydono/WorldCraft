@@ -40,7 +40,7 @@ module.exports = {
 
         console.log(EmailToken);
 
-        link = "http://localhost:4000" + "/verify/" + EmailToken
+        link = "http://localhost:"+ process.env.PORT + "/verify/" + EmailToken
         mailOptions = {
           from: 'noydono.dev@gmail.com',
           to: req.body.email,

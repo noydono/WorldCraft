@@ -28,7 +28,7 @@ module.exports = {
                 console.log("err verifMail callback");
             }else{
                 console.log(sucess);
-                res.redirect('http://localhost:8080/verifyMail')
+                res.redirect('https://worlcraft.herokuapp.com/verifyMail')
             }
         })
 

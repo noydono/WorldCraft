@@ -1,5 +1,4 @@
 const express = require('express'),
-    multer = require('../config/multer-config'),
     router = express.Router()
 
 const categorieController = require("./controllers/CategorieController.js"),

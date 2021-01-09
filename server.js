@@ -4,8 +4,9 @@ const express = require("express"),
     cors = require("cors"),
     mongoose = require("mongoose"),
     methodOverride = require("method-override"),
-    morgan = require('morgan')
-    port = process.env.PORT||4000;
+    morgan = require('morgan'),
+    dotenv = require("dotenv").config(),
+    port = process.env.PORT;
 
 
 const  ROUTER = require('./api/router.js');
