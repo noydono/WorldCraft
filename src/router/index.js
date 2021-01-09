@@ -14,7 +14,7 @@ let router = new VueRouter({
       children: [{
         path:'',
         name: 'Home',
-        component: () => import('../views/Forum_view.vue')
+        component: () => import('../views/Home_view.vue')
       }]
     },{
       path: '/contact',
@@ -24,9 +24,17 @@ let router = new VueRouter({
         name: 'Contact',
         component: () => import('../views/Contact_view.vue')
       }]
-    }
+    },
     // PAGES FORUM 
-    ,{
+    {
+      path:'/forum',
+      component:() => import('../layouts/main.vue'),
+      children:[{
+        path:'',
+        name:"ListSujet",
+        component: () => import('../views/Forum_view.vue')
+      }]
+    },{
       path:'/listSujet/:id',
       component:() => import('../layouts/main.vue'),
       children:[{
