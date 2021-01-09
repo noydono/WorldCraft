@@ -1,6 +1,5 @@
 const User = require("../dbModels/userModel.js"),
     nodemailer = require('nodemailer'),
-    keys = require('../../config/keys'),
     jwt = require("jsonwebtoken"),
     transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -9,7 +8,7 @@ const User = require("../dbModels/userModel.js"),
         secure: true,
         auth: {
             user: "noydono.dev@gmail.com",
-            pass: keys.mdpMailer
+            pass: process.env.MPDEMAIL
         },
         tls: {
             rejectUnauthorized: false

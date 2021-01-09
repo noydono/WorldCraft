@@ -5,13 +5,12 @@ const express = require("express"),
     mongoose = require("mongoose"),
     methodOverride = require("method-override"),
     morgan = require('morgan')
-    port = 4000;
+    port = process.env.PORT||4000;
 
 
-const keys = require('./config/keys.js'),
-    ROUTER = require('./api/router.js');
+const  ROUTER = require('./api/router.js');
 
-mongoose.connect(keys.mongoUri,{
+mongoose.connect(process.env.MONGO_URI,{
 
     useNewUrlParser: true ,
     useUnifiedTopology: true,
