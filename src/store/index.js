@@ -98,14 +98,14 @@ export default new Vuex.Store({
     * * */
     async setCategorie(context) {
 
-      await axios.post("http://localhost:4000/setCategorie", context.state.data)
+      await axios.post("http://localhost:"+process.env.PORT+"/setCategorie", context.state.data)
       router.push({ name: "Forum" })
 
 
     },
     async getCategorie(context) {
 
-      const { data: categorieState } = await axios.get("http://localhost:4000/getCategorie");
+      const { data: categorieState } = await axios.get("http://localhost:"+process.env.PORT+"/getCategorie");
       context.commit("SET_CATEGORIE", categorieState );
 
     },
@@ -118,13 +118,13 @@ export default new Vuex.Store({
     * * */
     async setSection(context) {
 
-      await axios.post("http://localhost:4000/setSection", context.state.data);
+      await axios.post("http://localhost:"+process.env.PORT+"/setSection", context.state.data);
       router.push({ name: "Forum" })
 
     },
     async getSection(context) {
 
-      const { data: sectionState } = await axios.get("http://localhost:4000/getSection");
+      const { data: sectionState } = await axios.get("http://localhost:"+process.env.PORT+"/getSection");
       context.commit("SET_SECTION", sectionState);
 
     },
@@ -137,18 +137,18 @@ export default new Vuex.Store({
     * * */
     async setSujet(context) {
 
-      await axios.post("http://localhost:4000/setSujet", context.state.data);
+      await axios.post("http://localhost:"+process.env.PORT+"/setSujet", context.state.data);
       router.push({ name: "Forum" }).catch(() => { });
 
     },
     async getSujet(context, id) {
-      const { data: sujetState } = await axios.get("http://localhost:4000/getSujet/" + id);
+      const { data: sujetState } = await axios.get("http://localhost:"+process.env.PORT+"/getSujet/" + id);
       context.commit("SET_SUJET", sujetState);
 
     },
     async getSujetId(context, id) {
 
-      const { data: sujetIdState } = await axios.get("http://localhost:4000/getSujetId/" + id);
+      const { data: sujetIdState } = await axios.get("http://localhost:"+process.env.PORT+"/getSujetId/" + id);
       context.commit("SET_SUJETID", sujetIdState);
 
     },
@@ -161,7 +161,7 @@ export default new Vuex.Store({
    async setReponse(context) {
     try{
 
-      await axios.post("http://localhost:4000/setReponse", context.state.data);
+      await axios.post("http://localhost:"+process.env.PORT+"/setReponse", context.state.data);
       router.push({ name: "Home" }).catch(() => { });
       swal("Sucess", "Votre reponse a été poster ", "success");
     
@@ -174,7 +174,7 @@ export default new Vuex.Store({
   async getReponse(context, id) {
     try{
 
-      const { data: reponseState } = await axios.get("http://localhost:4000/getReponse/" + id);
+      const { data: reponseState } = await axios.get("http://localhost:"+process.env.PORT+"/getReponse/" + id);
       context.commit("SET_REPONSE", reponseState);
     
     }catch(err){
@@ -194,7 +194,7 @@ export default new Vuex.Store({
       
       try {
 
-        let response = await axios.post("http://localhost:4000/login", context.state.data);
+        let response = await axios.post("http://localhost:"+process.env.PORT+"/login", context.state.data);
         context.commit("SET_LOGIN", true)
         let token = response.data.token;
         localStorage.setItem("jwt", token);
@@ -212,7 +212,7 @@ export default new Vuex.Store({
 
       try {
 
-        let response = await axios.post("http://localhost:4000/register", context.state.data);
+        let response = await axios.post("http://localhost:"+process.env.PORT+"/register", context.state.data);
         let token = response.data.token;
         if (token) {
           localStorage.setItem("jwt", token);
