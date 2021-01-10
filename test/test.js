@@ -87,7 +87,7 @@ describe('User registration', () => {
           console.log(err.message);
         })
   });
-  
+
   it('Should return 422 and a message if the password is not valid', (done) => {
     new_user.password = "aaaa"
     chai.request(app).post('/register')
