@@ -9,7 +9,7 @@ module.exports = class {
     this.passwordValidator(password)
     return {
         hasErrors: this.hasErrors,
-        errors:this.errors
+        errors: this.errors
     }
   }
 

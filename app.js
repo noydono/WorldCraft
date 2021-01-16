@@ -5,8 +5,27 @@
 const express = require("express"),
   app = express(),
   bodyParser = require("body-parser"),
-  ROUTER = require("./entrypoint/rest/router.js");
+  dotenv = require("dotenv").config(),
+  mongoose = require("mongoose"),
+  methodOverride = require("method-override"),
+  ROUTER = require("./api/router.js");
 
+mongoose.connect(
+  process.env.MONGO_URI,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  },
+  (err) => {
+    if (err) {
+      console.log("****** api n'est pas connecté à la base de données ******");
+    } else {
+      console.log("****** connecté à la basse de donées ******");
+    }
+  }
+);
+app.use(methodOverride('X-HTTP-Method-Override'))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
