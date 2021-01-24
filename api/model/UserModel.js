@@ -27,6 +27,7 @@ const userSchema = mongoose.Schema({
 
 userSchema.pre('save', function (next) {
   bcrypt.hash(this.password, 10, (err, encrypted) => { 
+    /* istanbul ignore if */
     if(err){
       console.log("LogModelUserEncrytpePassword: " + err)
     }
@@ -36,7 +37,6 @@ userSchema.pre('save', function (next) {
 })
 
 userSchema.methods.generateAuthToken = async function() {
-console.log("coucou");
   const user = this;
   const token = jwt.sign({ 
     _id: user._id, 
@@ -44,11 +44,9 @@ console.log("coucou");
     email: user.email, 
     created_at : user.created_at, 
   },
-  "secret");
+  process.env.USERSECRET);
   user.tokens = user.tokens.concat({ token });
   await user.save();
-  return token;
-
 };
 
 module.exports = mongoose.model("User", userSchema);

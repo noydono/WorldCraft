@@ -13,8 +13,8 @@ router.route("/")
 router.route("/user/register")
     .post(userController.register)
 
-router.route("/user/update/:id")
-    .put(userController.update)
+// router.route("/user/update/:id")
+//     .put(userController.update)
 
 
 

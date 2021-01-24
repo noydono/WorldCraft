@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "test": "mocha --watch",
+    "test": "nyc --reporter=html --reporter=text mocha",
     "start": "nodemon server.js"
   },
   "dependencies": {
@@ -27,7 +27,8 @@
     "dotenv": "^8.2.0",
     "faker": "^5.1.0",
     "mocha": "^8.2.1",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "nyc": "^15.1.0"
   },
   "eslintConfig": {
     "root": true,

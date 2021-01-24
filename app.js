@@ -18,8 +18,9 @@ mongoose.connect(
     useFindAndModify: false,
   },
   (err) => {
+    /* istanbul ignore if */
     if (err) {
-      console.log("****** api n'est pas connecté à la base de données ******");
+      console.log("****** problèmes de connexion à la base de données ******");
     } else {
       console.log("****** connecté à la basse de donées ******");
     }
@@ -30,5 +31,4 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use("/", ROUTER);
-
 module.exports = app;
