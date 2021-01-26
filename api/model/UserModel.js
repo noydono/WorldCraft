@@ -47,6 +47,29 @@ userSchema.methods.generateAuthToken = async function() {
   process.env.USERSECRET);
   user.tokens = user.tokens.concat({ token });
   await user.save();
+  return token;
 };
 
-module.exports = mongoose.model("User", userSchema);
+userSchema.statics.findByCredentials = async (email, password) => {
+  let errors = []
+  const user = await User.findOne({ email : email});
+  if(!user){
+    errors.push({ email: "email doesnt exit" });
+    return {
+      hasErrors:true,
+      errors: errors
+    };
+  }
+  const isPasswordMatch = await bcrypt.compare(password, user.password);
+  if(isPasswordMatch === false){
+    errors.push({ password: "Password doesn't match" });
+    return {
+      hasErrors:true,
+      errors: errors
+    };
+  }
+  return user;
+
+};
+const User = mongoose.model("User", userSchema);
+module.exports = User;

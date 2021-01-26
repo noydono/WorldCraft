@@ -28,15 +28,13 @@ describe("App", () => {
   });
 });
 
-
-
 describe("User registration", () => {
   let new_user = {};
 
   beforeEach(function (done) {
     new_user = {
       username: faker.name.firstName(),
-      email: "noy.donoo@toto.toto",
+      email: "noydono.dev.spam@gmail.com",
       password: faker.internet.password() + "1M*",
     };
     done();
@@ -46,7 +44,7 @@ describe("User registration", () => {
     UserModel.findOneAndDelete({ username: new_user.username }, (err, user) => {
       if (err) {
         console.log(
-          "LogTest_UserRegistration: "+ err);
+          "LogTest_UserRegistration: " + err);
       } else {
         done();
       }
@@ -87,7 +85,7 @@ describe("User registration", () => {
             if (err) {
               console.log(
                 "LogTest_UserRegistration: erreur de compare de password : " +
-                  err
+                err
               );
             }
             expect(result).to.be.equal(true);
@@ -201,9 +199,95 @@ describe("User registration", () => {
         console.log(err.message);
       });
   });
-
 });
-   
+
+describe("User login", () => {
+  let new_user = {
+    username: faker.name.firstName(),
+    email: "noydono.dev.spam@gmail.com",
+    password: faker.internet.password() + "1M*",
+  };
+
+  beforeEach(function (done) {
+    const user = new UserModel(new_user);
+    user.save((err, user_saved) => {
+      if (err) {
+        console.log(
+          "LogTest_UserUpdate: erreur de creation d'utilisateur" + err
+        );
+      } else {
+        console.log(
+          "LogTest_UserUpdate: utilisateur" + user.username + " créé"
+        );
+        done();
+      }
+    });
+    user.generateAuthToken()
+  });
+
+  afterEach(function (done) {
+    UserModel.findOneAndDelete({ username: new_user.username }, (err, user) => {
+      if (err) {
+        console.log(
+          "LogTest_UserRegistration: " + err);
+      } else {
+        done();
+      }
+    });
+  });
+
+  it("Should return 200 if the credential is valid", (done) => {
+    chai
+      .request(app)
+      .post("/user/login")
+      .send(new_user)
+      .then((res) => {
+        expect(res).to.have.status(200);
+        expect(res.body.token).to.exist;
+        expect(res.body.message).to.be.equal("Auth OK");
+        expect(res.body.errors.length).to.be.equal(0);
+        done();
+      })
+      .catch((err) => {
+        console.log(err.message);
+      })
+  });
+
+  it("Should return 422 if the email does not exist in the DB", (done) => {
+    new_user.email= "toto@toto.toto" ;
+    chai
+      .request(app)
+      .post("/user/login")
+      .send(new_user)
+      .then((res)=>{
+        expect(res).to.have.status(422);
+        expect(res.body.message).to.be.equal("Invalid entry");
+        expect(res.body.errors.length).to.be.equal(1);
+        done();
+      })
+      .catch((err)=>{
+        console.log(err.message);
+      })
+  })
+
+  it("Should send 422 if the password is not correct",(done) => {
+    new_user.password = "Toto1234*"
+    chai
+      .request(app)
+      .post("/user/login")
+      .send(new_user)
+      .then((res)=>{
+        expect(res).to.have.status(422);
+        expect(res.body.message).to.be.equal("Invalid entry");
+        expect(res.body.errors.length).to.be.equal(1);
+        done();
+      })
+      .catch((err)=>{
+        console.log(err.message);
+      })
+  })
+})
+
 // describe("User Update", () => {
 //   const old_user = {
 //     username: faker.name.firstName(),

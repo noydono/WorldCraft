@@ -19,6 +19,7 @@ mongoose.connect(
   },
   (err) => {
     /* istanbul ignore if */
+    // j'ignore le if car je ne sais pas comment je peut ecrire un test pour générer une erreur
     if (err) {
       console.log("****** problèmes de connexion à la base de données ******");
     } else {

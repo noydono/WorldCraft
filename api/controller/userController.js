@@ -20,7 +20,7 @@ module.exports = {
   register: async (req, res) => {
     let { username, email, password } = req.body;
     let errors = new Validator(username, email, password),
-    hasErrors = errors.hasErrors;
+      hasErrors = errors.hasErrors;
 
     if (errors.hasErrors) {
       res.status(422).json({
@@ -36,13 +36,14 @@ module.exports = {
       const user = new UserModel(data);
       user.save((err, user_saved) => {
         /* istanbul ignore if */
+    // j'ignore le if car je ne sais pas comment je peut ecrire un test pour générer cette erreur
         if (err) {
           console.log(err);
         } else {
           const EmailToken = jwt.sign(
-              { _id: data._id, email: req.body.email },
-              process.env.EMAILSECRET
-            ),
+            { _id: data._id, email: req.body.email },
+            process.env.EMAILSECRET
+          ),
             link = process.env.URL + "/verify/" + EmailToken,
             mailOptions = {
               from: "noydono.dev@gmail.com",
@@ -85,6 +86,27 @@ module.exports = {
       await user.generateAuthToken();
     }
   },
+  login: async (req, res) => {
+    const errors = [];
+    const user = await UserModel.findByCredentials(req.body.email, req.body.password);
+    if(user.hasErrors){
+      res.status(422).json({
+        message: "Invalid entry",
+        errors: user.errors,
+      });
+    }else{
+
+      const token = await user.generateAuthToken();
+      res.status(200).json({
+        message: "Auth OK",
+        token: token,
+        errors: errors,
+      });
+
+    }
+    
+  }
+
   // update: (req, res) => {
   //   let errors = [];
   //   let { username, email, password } = req.body;
