@@ -235,7 +235,7 @@ describe("User login", () => {
       }
     });
   });
-
+  
   it("Should return 200 if the credential is valid", (done) => {
     chai
       .request(app)
@@ -252,6 +252,23 @@ describe("User login", () => {
         console.log(err.message);
       })
   });
+
+  it("Should return 422 if the email is not valid", (done) => {
+    new_user.email= "toto@toto.";
+    chai
+      .request(app)
+      .post("/user/login")
+      .send(new_user)
+      .then((res)=>{
+        expect(res).to.have.status(422);
+        expect(res.body.message).to.be.equal("Invalid entry");
+        expect(res.body.errors.length).to.be.equal(1);
+        done();
+      })
+      .catch((err)=>{
+        console.log(err.message);
+      })
+  })
 
   it("Should return 422 if the email does not exist in the DB", (done) => {
     new_user.email= "toto@toto.toto" ;
@@ -288,58 +305,58 @@ describe("User login", () => {
   })
 })
 
-// describe("User Update", () => {
-//   const old_user = {
-//     username: faker.name.firstName(),
-//     email: faker.internet.email(),
-//     password: faker.internet.password() + "1M*",
-//   };
-//   let new_user = {};
+describe("User Update", () => {
+  const old_user = {
+    username: faker.name.firstName(),
+    email: faker.internet.email(),
+    password: faker.internet.password() + "1M*",
+  };
+  let new_user = {};
 
-//   beforeEach(function (done) {
-//     UserModel.create(old_user, (err, user) => {
-//       if (err) {
-//         console.log(
-//           "LogTest_UserUpdate: erreur de creation d'utilisateur" + err
-//         );
-//       } else {
-//         console.log(
-//           "LogTest_UserUpdate: utilisateur" + user.username + " créé"
-//         );
-//         new_user._id = user._id;
-//         done();
-//       }
-//     });
-//   });
+  beforeEach(function (done) {
+    UserModel.create(old_user, (err, user) => {
+      if (err) {
+        console.log(
+          "LogTest_UserUpdate: erreur de creation d'utilisateur" + err
+        );
+      } else {
+        console.log(
+          "LogTest_UserUpdate: utilisateur" + user.username + " créé"
+        );
+        new_user._id = user._id;
+        done();
+      }
+    });
+  });
 
-//   afterEach(function (done) {
-//     UserModel.findOneAndDelete({ username: new_user.username }, (err) => {
-//       if (err) {
-//         console.log("LogTest_UserUpdate: erreur de suppresion d'utilisateur");
-//       } else {
-//         console.log("LogTest_UserUpdate: utilisateur suprimé");
-//         done();
-//       }
-//     });
-//   });
+  afterEach(function (done) {
+    UserModel.findOneAndDelete({ username: new_user.username }, (err) => {
+      if (err) {
+        console.log("LogTest_UserUpdate: erreur de suppresion d'utilisateur");
+      } else {
+        console.log("LogTest_UserUpdate: utilisateur suprimé");
+        done();
+      }
+    });
+  });
 
-//   it("Should return 200 and message with the data is valid", (done) => {
-//     new_user.username = faker.name.firstName();
-//     new_user.email = faker.internet.email();
-//     new_user.password = faker.internet.password();
-//     chai
-//       .request(app)
-//       .put("/user/update/" + new_user._id)
-//       .send(new_user)
-//       .then((res) => {
-//         expect(res).to.have.status(200);
-//         expect(res.body.message).to.be.equal("update successful!");
-//         expect(res.body.errors.length).to.be.equal(0);
-//         expect(res.body.user.username).to.be.equal(new_user.username);
-//         done();
-//       })
-//       .catch((err) => {
-//         console.log(err.message);
-//       });
-//   });
-// });
+  it("Should return 200 and message with the data is valid", (done) => {
+    new_user.username = faker.name.firstName();
+    new_user.email = faker.internet.email();
+    new_user.password = faker.internet.password();
+    chai
+      .request(app)
+      .put("/user/update/" + new_user._id)
+      .send(new_user)
+      .then((res) => {
+        expect(res).to.have.status(200);
+        expect(res.body.message).to.be.equal("update successful!");
+        expect(res.body.errors.length).to.be.equal(0);
+        expect(res.body.user.username).to.be.equal(new_user.username);
+        done();
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  });
+});
