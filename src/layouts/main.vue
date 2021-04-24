@@ -17,12 +17,12 @@
       <v-btn to="/" class="ml-auto mt-2" text>Accueil</v-btn>
       <v-btn to="/forum" class="mt-2" text>Forum</v-btn>
       <v-btn v-if="isAdmin == true" to="/admin" class="mt-2" text>admin</v-btn>
-      <CreateSujetComponent v-if="loginState == true" />
-      <AuthComponent v-if="loginState == false" />
-      <v-btn v-if="loginState == true" to="/userdetail" class="mt-2" text
+      <CreateSujetComponent v-if="isLogin == true" />
+      <AuthComponent v-if="isLogin == false" />
+      <v-btn v-if="isLogin == true" to="/userdetail" class="mt-2" text
         >mon Compte</v-btn
       >
-      <v-btn v-if="loginState == true" @click="logUserOut()" class="mt-2" text
+      <v-btn v-if="isLogin == true" @click="logUserOut()" class="mt-2" text
         >déconnection</v-btn
       >
     </v-app-bar>
@@ -37,30 +37,56 @@
 </template>
 
 <script>
-import CreateSujetComponent from "../components/Main/CreateSujetComponent";
-import AuthComponent from "../components/Main/AuthComponent";
+import CreateSujetComponent from "../components/global/createSujetComponent";
+import AuthComponent from "../components/global/auth/authComponent";
+import VueJwtDecode from 'vue-jwt-decode'
 import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
-  data: () => ({
-  }),
-  created() {
+
+  data: () => ({}),
+
+  created(){
     let token = localStorage.getItem("jwt");
     if (token) {
       this.SET_LOGIN(true);
+      if(VueJwtDecode.decode(token).isAdmin === true){
+        this.SET_ADMIN(true)
+      }else{
+        this.SET_ADMIN(false)
+      }
+    } else {
+      this.SET_LOGIN(false);
+    }
+  },
+    
+  updated(){
+    let token = localStorage.getItem("jwt");
+    if (token) {
+      this.SET_LOGIN(true);
+      if(VueJwtDecode.decode(token).isAdmin === true){
+        this.SET_ADMIN(true)
+      }else{
+        this.SET_ADMIN(false)
+      }
     } else {
       this.SET_LOGIN(false);
     }
   },
   methods: {
-    ...mapActions(["UserOut"]),
-    ...mapMutations(["SET_LOGIN"]),
+    ...mapActions(["logout"]),
+    ...mapMutations(["SET_LOGIN","SET_ADMIN"]),
+    
     logUserOut() {
-      this.UserOut();
+      this.SET_ADMIN(false)
+      this.logout();
     },
   },
   computed: {
-    ...mapState(["isAdmin","loginState"]),
+    ...mapState({
+      isLogin: state => state.auth.isLogin,
+      isAdmin: state => state.auth.isAdmin
+    }),
   },
   components: {
     CreateSujetComponent,

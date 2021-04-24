@@ -15,7 +15,7 @@
             <h2 style="font-size:25px;" class=" mb-2">S'identifier</h2>
 
             <v-row>
-              <v-col md="12" sm="6">
+              <v-col md="12" sm="12">
                 <v-text-field
                   v-model="User.email"
                   :rules="[rules.required, rules.email]"
@@ -136,7 +136,7 @@ export default {
     login: true,
     rules: {
       required: (value) => !!value || "Obligatoire.",
-      min: (v) => v.length >= 8 || "Min 8 caractères",
+      min: (value) =>  value && value.length >= 8 || "Min 8 caractères",
       email: (value) => {
         const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return pattern.test(value) || "e-mail non valide.";
@@ -146,24 +146,23 @@ export default {
   created() {},
   methods: {
     ...mapMutations(["SET_DATA"]),
-    ...mapActions(["setLogin", "setRegister"]),
+    ...mapActions(["signin", "signup"]),
 
     _setForm() {
-      this.SET_DATA(this.User);
+     this.SET_DATA(this.User);
     },
 
     submitLogin(event) {
       this.dialog = false;
       event.preventDefault();
-      this.setLogin(this.User);
+      this.signin();
     },
 
     submitRegister(event) {
       this.User.password = this.passwordConfirm;
-      console.log(this.User);
       this.dialog = false;
       event.preventDefault();
-      this.setRegister(this.User);
+      this.signup();
     },
   },
   computed: {},

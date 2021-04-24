@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import ListSujetComponent from "../components/Forum/ListSujetComponent";
-import BannerComponent from "../components/Main/BannerComponent";
+import ListSujetComponent from "../components/pages/forum/listSujetComponent";
+import BannerComponent from "../components/global/bannerComponent";
 export default {
   components: {
     BannerComponent,

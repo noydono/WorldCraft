@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import UserDetailsComponents from '../components/user/UserDetailComponent'
+import UserDetailsComponents from '../components/pages/user/userDetailComponent'
 
 export default {
   data() {

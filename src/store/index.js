@@ -3,251 +3,29 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-import axios from "axios";
-import router from "../router";
-import swal from 'sweetalert';
-// import VueJwtDecode frosm "vue-jwt-decode";
-
-// import { Object } from "core-js";
+import auth from './auth/auth'
+import categorie from './categorie/categorie'
+import section from './section/section'
+import sujet from './sujet/sujet'
+import reponse from './reponse/reponse'
 
 export default new Vuex.Store({
-
+  modules: {
+    auth,
+    categorie,
+    section,
+    sujet,
+    reponse
+  },
   state: {
     data: {},
-    categorieState: [],
-    sectionState: [],
-    sujetState: [],
-    sujetIdState: [],
-    reponseState: [],
-    loginState: false
   },
-
   mutations: {
-
-
-    /*
-    *
-    *  global mutations
-    * 
-    * * */
     SET_DATA(state, value) {
       state.data = value;
     },
-
-
-    /*
-    *
-    *  Gestion de Categorie
-    * 
-    * * */
-    SET_CATEGORIE(state, categorie) {
-      state.categorieState = categorie;
-    },
-
-
-    /*
-    *
-    *  Gestion de section
-    * 
-    * * */
-    SET_SECTION(state, section) {
-      state.sectionState = section;
-    },
-
-
-    /*
-    *
-    *  Gestion de sujet
-    * 
-    * * */
-    SET_SUJET(state, sujet) {
-      state.sujetState = sujet;
-    },
-
-    SET_SUJETID(state, sujetId) {
-      state.sujetIdState = sujetId;
-    },
-
-    /*
-    *
-    *  Gestion de reponse
-    * 
-    * * */
-    SET_REPONSE(state, reponse) {
-      state.reponseState = reponse;
-    },
-
-
-    /*
-    *
-    *  Gestion d'user
-    * 
-    * * */
-    SET_LOGIN(state, value) {
-      state.loginState = value
-    }
-
   },
+  actions: {},
 
-  actions: {
-
-    /*
-    *
-    *  Gestion de Categorie
-    * 
-    * * */
-    async setCategorie(context) {
-
-      await axios.post("http://localhost:"+process.env.PORT+"/setCategorie", context.state.data)
-      router.push({ name: "Forum" })
-
-
-    },
-    async getCategorie(context) {
-
-      const { data: categorieState } = await axios.get("http://localhost:"+process.env.PORT+"/getCategorie");
-      context.commit("SET_CATEGORIE", categorieState );
-
-    },
-   
-
-    /*
-    *
-    *  Gestion de Section
-    * 
-    * * */
-    async setSection(context) {
-
-      await axios.post("http://localhost:"+process.env.PORT+"/setSection", context.state.data);
-      router.push({ name: "Forum" })
-
-    },
-    async getSection(context) {
-
-      const { data: sectionState } = await axios.get("http://localhost:"+process.env.PORT+"/getSection");
-      context.commit("SET_SECTION", sectionState);
-
-    },
-
-    
-    /*
-    *
-    *  Gestion de Sujet
-    * 
-    * * */
-    async setSujet(context) {
-
-      await axios.post("http://localhost:"+process.env.PORT+"/setSujet", context.state.data);
-      router.push({ name: "Forum" }).catch(() => { });
-
-    },
-    async getSujet(context, id) {
-      const { data: sujetState } = await axios.get("http://localhost:"+process.env.PORT+"/getSujet/" + id);
-      context.commit("SET_SUJET", sujetState);
-
-    },
-    async getSujetId(context, id) {
-
-      const { data: sujetIdState } = await axios.get("http://localhost:"+process.env.PORT+"/getSujetId/" + id);
-      context.commit("SET_SUJETID", sujetIdState);
-
-    },
-
-    /*
-    *
-    *  Gestion de Reponse
-    * 
-    * * */
-   async setReponse(context) {
-    try{
-
-      await axios.post("http://localhost:"+process.env.PORT+"/setReponse", context.state.data);
-      router.push({ name: "Home" }).catch(() => { });
-      swal("Sucess", "Votre reponse a été poster ", "success");
-    
-    }catch(err){
-      swal("Error", "Quelque chose s'est mal passé : " + err, "error");
-    }
-    
-
-  },
-  async getReponse(context, id) {
-    try{
-
-      const { data: reponseState } = await axios.get("http://localhost:"+process.env.PORT+"/getReponse/" + id);
-      context.commit("SET_REPONSE", reponseState);
-    
-    }catch(err){
-      console.log("err getReponse : " + err )
-    }
-    
-
-  },
-
-    
-    /*
-    *
-    *  Gestion d'User
-    * 
-    * * */
-    async setLogin(context) {
-      
-      try {
-
-        let response = await axios.post("http://localhost:"+process.env.PORT+"/login", context.state.data);
-        context.commit("SET_LOGIN", true)
-        let token = response.data.token;
-        localStorage.setItem("jwt", token);
-        if (token) {
-          swal("Success", "Connexion reussi", "success");
-          router.push("Home").catch(() => { });
-        }
-
-      } catch (err) {
-        swal("Error", "Quelque chose s'est mal passé : ", "error");
-      }
-
-    },
-    async setRegister(context) {
-
-      try {
-
-        let response = await axios.post("http://localhost:"+process.env.PORT+"/register", context.state.data);
-        let token = response.data.token;
-        if (token) {
-          localStorage.setItem("jwt", token);
-          router.push("Home").catch(() => { });
-          swal("Success", "Un Mail De verification vous a été envoyer", "success");
-        } else {
-          swal("Error", "Quelque chose s'est mal passé : " + response.data.err, "error");
-        }
-
-      } catch (err) {
-
-        let error = err.response;
-        if (error.status == 409) {
-          swal("Error",err, "error");
-        } else {
-          swal("Error", err, "error");
-        }
-
-      }
-
-    },
-    async UserOut(context) {
-
-      localStorage.removeItem("jwt");
-      context.commit("SET_LOGIN", false)
-      router.push("Home").catch(() => { });
-      swal("Success", "déconnexion réussi", "success");
-
-    },
-    async UpdateUserDetails(){
-
-    }
-  },
-
-  modules: {
-  }
 
 })

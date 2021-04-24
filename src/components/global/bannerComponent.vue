@@ -11,7 +11,7 @@
       src="../../../public/img/une_minecraft_lamomie4.jpg"
       
     >
-    <v-card-title class="d-flex justify-center"> connecter vous pour plus de plaisir pub ou autre</v-card-title>
+    <v-card-title class="d-flex justify-center"></v-card-title>
     </v-img>
     </v-card>
   

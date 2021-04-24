@@ -25,7 +25,7 @@
 
       <v-list width="100%">
         <v-list-group
-          v-for="(categorie, key) in categorieState"
+          v-for="(categorie, key) in categories"
           :key="key"
           no-action
         >
@@ -40,10 +40,10 @@
 
           <v-list-item
             v-for="(section, key) in filterSmallCategorie(
-              categorie._id
+              categorie.id
             )"
             :key="key"
-            @click="SelectCategorie(section._id)"
+            @click="SelectCategorie(section.id)"
           >
             <v-list-item-icon class="mt-6 grey--text text--darken-2">
               <v-icon
@@ -57,7 +57,7 @@
                   class="subtitle-1 mt-1 grey--text text--darken-4"
                   v-text="section.name"
                 ></div>
-                <v-chip x-small class="ma-2 grey"> nouveaux </v-chip>
+                <!-- <v-chip x-small class="ma-2 grey"> nouveaux </v-chip> -->
               </div>
 
               <v-list-item-title
@@ -66,15 +66,6 @@
               ></v-list-item-title>
             </v-list-item-content>
 
-            <div class="d-flex flex-row justify-center align-center">
-              <v-list-item-avatar class="mr-5">
-                <v-img :src="section.avatar"></v-img>
-              </v-list-item-avatar>
-              <v-list-item-title>
-                <div class="subtitle-1 black--text">titre du sujet</div>
-                <div class="subtitle-2 grey--text">26 juin - by pseudo</div>
-              </v-list-item-title>
-            </div>
           </v-list-item>
         </v-list-group>
       </v-list>
@@ -124,6 +115,7 @@
         </v-card-actions>
       </form>
     </v-card>
+
   </v-dialog>
 </template>
 
@@ -132,16 +124,22 @@ import { mapMutations, mapActions, mapState } from "vuex";
 import VueJwtDecode from "vue-jwt-decode";
 
 export default {
+
   data: () => ({
     newSujet: {},
     dialog: false,
     selectCategorie: false,
   }),
+
   created() {
+
     this.getCategorie();
     this.getSection();
+
   },
+
   methods: {
+
     ...mapMutations(["SET_DATA"]),
     ...mapActions(["getCategorie", "getSection", "setSujet"]),
 
@@ -153,39 +151,51 @@ export default {
         }        
         this.SET_DATA(this.newSujet);
     },
+
     formatTag(){  
         let arrayTag = [];
-        arrayTag = this.newSujet.tag.split(" ");
+        arrayTag = this.newSujet.tag.split(" " || " # ");
         this.newSujet.tag = arrayTag;
     },
+
     submitSujet(event) {
       this.dialog = false;
       event.preventDefault();
       this.setSujet();
     },
-    filterSmallCategorie(bId) {
+
+    filterSmallCategorie(categorieID) {
       var arrayCat = [];
-      this.sectionState.forEach((item) => {
-        if (bId === item.categorie_id) {
+      this.sections.forEach((item) => {
+        if (categorieID === item.categorie_id) {
           arrayCat.push(item);
         }
       });
-
       return arrayCat;
     },
+
     SelectCategorie(id) {
       this.newSujet.section_id = id;
       this.selectCategorie = true;
     },
+
     retour() {
       this.newSujet.section_id = null;
       this.selectCategorie = false;
     },
+
   },
+
   computed: {
-    ...mapState(["categorieState", "sectionState"]),
+
+    ...mapState({
+      categories: state => state.categorie.categories, 
+      sections: state => state.section.sections
+      }),
+
   },
 };
+
 </script>
 
 <style lang="scss" scoped>

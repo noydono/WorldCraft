@@ -2,7 +2,7 @@
   <v-row class="mt-12">
     <v-list width="100%">
       <v-list-group
-        v-for="(categorie, key) in categorieState"
+        v-for="(categorie, key) in categories"
         :key="key"
         no-action
       >
@@ -19,10 +19,10 @@
 
         <v-list-item
           v-for="(section, key) in filterSection(
-            categorie._id
+            categorie.id
           )"
           :key="key"
-          :to="{ path: '/listSujet/' + section._id }"
+          :to="{ path: '/listSujet/' + section.id }"
         >
           <v-list-item-icon class="mt-6 grey--text text--darken-2">
             <v-icon
@@ -77,7 +77,7 @@ export default {
 
     filterSection(bId) {
       var arrayCat = [];
-      this.sectionState.forEach((item) => {
+      this.sections.forEach((item) => {
         if (bId === item.categorie_id) {
           arrayCat.push(item);
         }
@@ -87,7 +87,10 @@ export default {
     },
   },
   computed: {
-    ...mapState(["categorieState", "sectionState"]),
+    ...mapState({
+      categories: state => state.categorie.categories, 
+      sections: state => state.section.sections
+      }),
   },
 };
 </script>

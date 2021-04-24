@@ -8,7 +8,7 @@
   </v-container>
 </template>
 <script>
-import ListCategorieComponent from "../components/Forum/ListCategorieComponent";
+import ListCategorieComponent from "../components/pages/forum/listCategorieComponent";
 export default {
   name: "Forum",
   data() {

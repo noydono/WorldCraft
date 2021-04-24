@@ -25,13 +25,14 @@ let router = new VueRouter({
         component: () => import('../views/Contact_view.vue')
       }]
     },
+    
     // PAGES FORUM 
     {
       path:'/forum',
       component:() => import('../layouts/main.vue'),
       children:[{
         path:'',
-        name:"ListSujet",
+        name:"Forum",
         component: () => import('../views/Forum_view.vue')
       }]
     },{

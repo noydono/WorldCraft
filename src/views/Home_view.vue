@@ -10,9 +10,9 @@
 
 <script>
 
-import CardComponent from "../components/Home/CardComponent";
-import TopSujetComponent from "../components/Home/TopSujetComponent";
-import BannerComponent from "../components/Main/BannerComponent";
+import CardComponent from "../components/pages/home/cardComponent";
+import TopSujetComponent from "../components/pages/home/topSujetComponent";
+import BannerComponent from "../components/global/bannerComponent";
 
 export default {
   name: "Home",

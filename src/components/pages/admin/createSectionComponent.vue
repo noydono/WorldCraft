@@ -7,9 +7,9 @@
       <form @submit="submitSection">
 
          <v-select
-          :items="categorieState"
+          :items="categories"
           item-text="name"
-          item-value="_id"
+          item-value="id"
           label="Categorie"
           v-model="newSection.categorie_id"
         ></v-select>
@@ -57,7 +57,9 @@ export default {
     },
   },
   computed: {
-    ...mapState(["categorieState"]),
+    ...mapState({
+      categories: state => state.categorie.categories, 
+      }),
   },
 };
 </script>

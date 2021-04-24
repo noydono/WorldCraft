@@ -2,21 +2,16 @@
   <v-container class="">
     <h2 class="display-3 mb-3"></h2>
 
-
-    <v-card
-      v-for="(sujet, key) in sujetIdState"
-      :key="key"
-      class="mb-9"
-      style="border: 1px solid grey"
-    >
+    <v-card class="mb-9" style="border: 1px solid grey">
       <v-card-title
         class="blue-grey lighten-3"
         style="height: 55px; padding: 0 0 0 30px !important"
-        
       >
-      {{ sujet.title }}
+        {{ sujet.title }}
 
-      <span class=" subtitle-2 ml-auto mr-3">{{date(sujet.created_at)}}</span>
+        <span class="subtitle-2 ml-auto mr-3">{{
+          date(sujet.created_at)
+        }}</span>
       </v-card-title>
       <v-card-text style="padding: 0 12px 0 12px !important">
         <v-row>
@@ -42,9 +37,7 @@
             md="10"
             class=""
           >
-            <h2>
-              
-            </h2>
+            <h2></h2>
             <p class="mt-5 text-justify">
               {{ sujet.content }}
             </p>
@@ -55,22 +48,17 @@
 
     <h3>Reponse :</h3>
 
+    <v-row class="underline"> </v-row>
 
-    <v-row class="underline">
-    </v-row>
-
-
-     <v-card 
-      v-for="(reponse,key) in cloneItems"
+    <v-card
+      v-for="(reponse, key) in cloneItems"
       :key="key"
-      class="reponse-card mt-7 "
+      class="reponse-card mt-7"
     >
-      <v-card-title
-        class="blue-grey lighten-3 subtitle-2 reponse-card-title"
-        
-      >
-      <span class=" subtitle-2 ml-auto mr-3">{{date(reponse.created_at)}}</span>
-
+      <v-card-title class="blue-grey lighten-3 subtitle-2 reponse-card-title">
+        <span class="subtitle-2 ml-auto mr-3">{{
+          date(reponse.created_at)
+        }}</span>
       </v-card-title>
       <v-card-text style="padding: 0 12px 0 12px !important">
         <v-row>
@@ -86,20 +74,17 @@
             <span class="mt-2"> <strong>date : </strong> 6/12/21212 </span>
             <span> <strong>post</strong> : 1212</span>
           </v-col>
-          <v-col
-            md="10"
-            class="reponse-card-col-content"
-          >
+          <v-col md="10" class="reponse-card-col-content">
             <p class="mt-5 ml-5 text-justify">
               {{ reponse.content }}
             </p>
           </v-col>
         </v-row>
       </v-card-text>
-    </v-card> 
+    </v-card>
 
     <v-pagination
-      v-if="reponseState.length >= pagination.rowsPerPage"
+      v-if="reponses.length >= pagination.rowsPerPage"
       v-model="pagination.page"
       :length="pages"
       circle
@@ -109,7 +94,7 @@
 
     <form @submit="submitReponse">
       <v-card
-        v-if="loginState === true"
+        v-if="isLogin === true"
         class="mt-5 d-flex flex-column align-center justify-center"
       >
         <v-card-title>
@@ -132,7 +117,7 @@
       </v-card>
       <v-card
         class="mt-5 d-flex flex-column align-center justify-center"
-        v-if="loginState === false"
+        v-if="isLogin === false"
       >
         <v-card-text> connect toi pour commenter </v-card-text>
       </v-card>
@@ -144,6 +129,7 @@
 import { mapActions, mapState, mapMutations } from "vuex";
 import VueJwtDecode from "vue-jwt-decode";
 import moment from "moment";
+
 export default {
   data() {
     return {
@@ -156,13 +142,15 @@ export default {
       news: false,
     };
   },
+
   created() {
-    this.getSujetId(this.$route.params.id);
-    this.getReponse(this.$route.params.id);
+    this.getSujetById(this.$route.params.id);
+    this.getReponses(this.$route.params.id);
   },
   methods: {
     ...mapMutations(["SET_DATA"]),
-    ...mapActions(["getSujetId", "setReponse", "getReponse"]),
+    ...mapActions(["getSujetById", "setReponse", "getReponses"]),
+
     _setForm() {
       let token = localStorage.getItem("jwt");
       if (token) {
@@ -172,17 +160,22 @@ export default {
       this.newReponse.sujet_id = this.$route.params.id;
       this.SET_DATA(this.newReponse);
     },
+
     submitReponse(event) {
       event.preventDefault();
       this.setReponse();
+      this.newReponse = {};
+      this.getReponses(this.$route.params.id);
+      this.SET_DATA();
     },
+
     date(date) {
       let d = new Date(date);
       let m = moment(d);
       moment.updateLocale("en", {
         relativeTime: {
           future: "dans %s",
-          past: "%s depuis",
+          past: " il y a %s",
           s: "quelques secondes",
           ss: "%d secondes",
           m: "une minute",
@@ -203,13 +196,18 @@ export default {
     },
   },
   computed: {
-    ...mapState(["sujetIdState", "loginState", "reponseState"]),
+    ...mapState({
+      sujet: (state) => state.sujet.sujet,
+      isLogin: (state) => state.auth.isLogin,
+      reponses: (state) => state.reponse.reponses,
+    }),
 
     pages() {
-      return Math.ceil(this.reponseState.length / this.pagination.rowsPerPage);
+      return Math.ceil(this.reponses.length / this.pagination.rowsPerPage);
     },
+
     cloneItems() {
-      var clone = JSON.parse(JSON.stringify(this.reponseState));
+      var clone = JSON.parse(JSON.stringify(this.reponses));
       var startFrom =
         this.pagination.page * this.pagination.rowsPerPage -
         this.pagination.rowsPerPage;
@@ -245,10 +243,9 @@ export default {
   border-right: 1px solid grey
 
 .reponse-card-title
-  height: 55px 
+  height: 55px
   padding: 0 0 0 30px !important
 
 .reponse-card
   border: 1px solid grey
-
 </style>

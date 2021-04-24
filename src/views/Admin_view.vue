@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import CreateCategorieComponent from '../components/admin/CreateCategorieComponent'
-import CreateSectionComponent from '../components/admin/CreateSectionComponent'
+import CreateCategorieComponent from '../components/pages/admin/createCategorieComponent'
+import CreateSectionComponent from '../components/pages/admin/createSectionComponent'
 
 export default {
   name: "Admin",
