@@ -1,68 +1,62 @@
 const express = require("express"),
     app = express(),
-    bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
     methodOverride = require("method-override"),
     morgan = require('morgan'),
-    ROUTER = require("./app/router.js"),
+    EventEmitter = require('events'),
+    Env = require("./dataproviders/config/setupEnvironment.js"),
     cors = require("cors"),
     corsOption = {
-        origin: "http://localhost:4200"
+        origin: "http://localhost:8081"
     }
 
-    /* istanbul ignore next */
-if (process.env.NODE_ENV === 'production') {
+    let dotenv = new Env().init()
 
-    const dotenv = require("dotenv").config({
-        path: '.env'
-    })
 
-} else if (process.env.NODE_ENV === 'developpement') {
+    mongoose.connect(process.env.MONGOURL, {
 
-    const dotenv = require("dotenv").config({
-        path: '.env.dev'
-    })
-    app.use(morgan('tiny'))
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useFindAndModify: false,
+            useCreateIndex: true
 
-} else if (process.env.NODE_ENV === 'test') {
+        }, (err) => {
+            if (err) {
+                console.log("****** problèmes de connexion à la base de données ******");
+                console.log(err);
+            } else {
+                console.log("****** connecté à la basse de donées ******");
+            }
+        });
+    
 
-    const dotenv = require("dotenv").config({
-        path: '.env.test'
-    })
-}
 
-mongoose.connect(
-    process.env.MONGOURL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false,
-    },
-    (err) => {
-        /* istanbul ignore if */
-        // j'ignore le if car je ne sais pas comment je peut ecrire un test pour générer une erreur
-        if (err) {
-            console.log("****** problèmes de connexion à la base de données ******");
-        } else {
-            console.log("****** connecté à la basse de donées ******");
-        }
-    }
-);
+const authRouter = require("./routes/authRouter.js")
+const categorieRouter = require("./routes/categorieRouter.js")
+const sectionRouter = require("./routes/sectionRouter.js")
+const sujetRouter = require("./routes/sujetRouter.js")
+const reponseRouter = require("./routes/responseRouter.js");
+    
+
+const emitter = new EventEmitter()
+emitter.setMaxListeners(0)
+EventEmitter.prototype._maxListeners = 100;
 
 
 
 app.use(cors(corsOption))
 app.use(methodOverride('X-HTTP-Method-Override'))
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+app.use(express.json());
 
 
-app.use("/api", ROUTER);
+app.use("/auth", authRouter);
+app.use("/categorie", categorieRouter);
+app.use("/section", sectionRouter);
+app.use("/sujet", sujetRouter);
+app.use("/reponse", reponseRouter);
 
 
 app.listen(process.env.PORT, (err) => {
-    /* istanbul ignore if */
     if (err) {
         console.log(err);
     } else {
@@ -70,4 +64,5 @@ app.listen(process.env.PORT, (err) => {
         console.log("api tourne sur le port : " + process.env.PORT );
     }
 })
+
 module.exports = app;
