@@ -1,0 +1,116 @@
+<template>
+  <v-row class="mt-12">
+    <v-card class="mx-auto" v-if="sujets.length != 0">
+      <v-list
+        :disabled="false"
+        :dense="false"
+        :two-line="false"
+        :three-line="true"
+        :shaped="true"
+        :flat="false"
+        :subheader="false"
+        :sub-group="false"
+        :nav="false"
+        :avatar="true"
+        :rounded="false"
+        max-width="900"
+        width="800"
+      >
+        <v-subheader>Sujet</v-subheader>
+        <v-list-item-group v-model="item" color="primary">
+          <v-list-item
+            v-for="subItem in cloneItems"
+            :key="subItem.id"
+            :to="{ path: '/sujet/' + subItem._id }"
+          >
+            <v-list-item-avatar class="mr-5 mt-6">
+              <v-img src="https://cdn.vuetifyjs.com/images/lists/5.jpg"></v-img>
+            </v-list-item-avatar>
+
+            <v-list-item-content>
+              <div class="d-flex flex-row justify-start align-start">
+                <div
+                  class="subtitle-1 mt-1 grey--text text--darken-4"
+                  v-text="subItem.title"
+                ></div>
+              </div>
+
+              <v-list-item-title
+                class="subtitle-2 grey--text"
+                v-html="subItem.content"
+              ></v-list-item-title>
+            </v-list-item-content>
+
+            <div class="d-flex flex-row justify-center align-center">
+              <v-list-item-title>
+                <div class="subtitle-1 black--text">pseudo</div>
+                <div class="subtitle-2 grey--text">26 juin</div>
+              </v-list-item-title>
+              <v-list-item-avatar class="mr-5">
+                <v-img
+                  aspect-ratio="2"
+                  src="https://cdn.vuetifyjs.com/images/lists/5.jpg"
+                ></v-img>
+              </v-list-item-avatar>
+            </div>
+          </v-list-item>
+          <v-pagination
+            v-if="sujets.length >= pagination.rowsPerPage"
+            v-model="pagination.page"
+            :length="pages"
+            circle
+            color="light-green darken-1"
+            class="pb-5"
+          ></v-pagination>
+        </v-list-item-group>
+      </v-list>
+    </v-card>
+    <v-card class="mx-auto text-center" v-if="sujets.length == 0">
+      <h2 class="py-5 px-5">oups !!!</h2>
+      <p class="px-5">
+        il n'y a pas encore de sujet soit le premier a en crée un.
+      </p>
+    </v-card>
+  </v-row>
+</template>
+<script>
+import { mapActions, mapState } from "vuex";
+
+export default {
+  data() {
+    return {
+      item: 5,
+      pagination: {
+        page: 1,
+        rowsPerPage: 10,
+      },
+      news: false,
+    };
+  },
+  created() {
+    this.getSujetsById(this.$route.params.id);
+  },
+  mounted() {},
+  methods: {
+    ...mapActions(["getSujetsById"]),
+  },
+  computed: {
+
+    ...mapState({
+      sujets: state => state.sujet.sujets
+      }),
+
+    pages() {
+      return Math.ceil(this.sujets.length / this.pagination.rowsPerPage);
+    },
+
+    cloneItems() {
+      var clone = JSON.parse(JSON.stringify(this.sujets));
+      var startFrom =
+        this.pagination.page * this.pagination.rowsPerPage -
+        this.pagination.rowsPerPage;
+      return clone.splice(startFrom, this.pagination.rowsPerPage);
+    },
+  },
+};
+</script>
